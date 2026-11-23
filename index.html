@@ -1,0 +1,2880 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM-PAC PAN | Pendataan Pengurus Anak Cabang PAN Bungursari, Kota Tasikmalaya</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        pan: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#1d4ed8',
+                            700: '#0047AB', // Royal Blue PAN
+                            800: '#003399', // Biru PAN Utama
+                            900: '#002266', // Biru Gelap Berwibawa
+                            950: '#001540',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Pengaturan khusus cetak laporan SK dan KTA */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                color: black !important;
+                padding: 20px;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- Header & Identitas Organisasi -->
+    <header class="bg-gradient-to-r from-pan-950 via-pan-900 to-pan-700 text-white shadow-xl border-b-4 border-sky-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <!-- Logo PAN Putih Bersih & Nama Organisasi -->
+                <div class="flex items-start sm:items-center gap-4">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-pan-800 p-1.5 shadow-lg shrink-0 flex items-center justify-center border-2 border-white">
+                        <div class="w-full h-full bg-pan-800 rounded-xl flex flex-col items-center justify-center relative overflow-hidden text-white">
+                            <!-- Lambang Partai Amanat Nasional (PAN) Putih Murni -->
+                            <svg class="w-12 h-12 sm:w-14 sm:h-14 text-white" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Bingkai Kotak Luar Putih -->
+                                <rect x="6" y="6" width="88" height="88" rx="10" stroke="#FFFFFF" stroke-width="4.5" fill="#003399"/>
+                                <!-- Lingkaran Cahaya Matahari -->
+                                <circle cx="50" cy="40" r="13" fill="#FFFFFF"/>
+                                <!-- Sinar-sinar Runcing Simetris Putih -->
+                                <polygon points="50,12 46.5,23 53.5,23" fill="#FFFFFF"/>
+                                <polygon points="70,19 60.5,25.5 65.5,30.5" fill="#FFFFFF"/>
+                                <polygon points="30,19 39.5,25.5 34.5,30.5" fill="#FFFFFF"/>
+                                <polygon points="79,38 67,35.5 67,42.5" fill="#FFFFFF"/>
+                                <polygon points="21,38 33,35.5 33,42.5" fill="#FFFFFF"/>
+                                <polygon points="73,54 63,47.5 60,53.5" fill="#FFFFFF"/>
+                                <polygon points="27,54 37,47.5 40,53.5" fill="#FFFFFF"/>
+                                <!-- Garis-garis Horizontal / Papan Catur Bendera Bawah Putih -->
+                                <rect x="14" y="60" width="72" height="5.5" fill="#FFFFFF"/>
+                                <rect x="14" y="69" width="72" height="5.5" fill="#FFFFFF"/>
+                                <rect x="14" y="78" width="72" height="5.5" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/15 border border-white/35 text-white text-xs font-bold tracking-wider uppercase mb-1.5">
+                            <span class="w-2 h-2 rounded-full bg-white animate-pulse"></span>
+                            <span id="header-tingkat-badge">PENGURUS ANAK CABANG (PAC)</span>
+                        </div>
+                        <h1 id="header-org-name" class="font-display text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white leading-tight">
+                            PARTAI AMANAT NASIONAL (PAN)
+                        </h1>
+                        <p id="header-org-region" class="text-sky-100 text-sm sm:text-base mt-1 flex items-center gap-1.5 font-medium">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-white shrink-0"></i>
+                            <span>Kecamatan Bungursari, Kota Tasikmalaya • Periode 2025 - 2030</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quick Action Button -->
+                <div class="flex flex-wrap items-center gap-3 self-start lg:self-center">
+                    <button onclick="openFormNew('Pengurus Harian PAC')" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-sky-50 text-pan-900 font-extrabold text-sm rounded-xl shadow-md transition-all active:scale-95">
+                        <i data-lucide="user-plus" class="w-4 h-4 text-pan-800"></i>
+                        <span>Daftar Pengurus / Relawan</span>
+                    </button>
+                    <button onclick="switchTab('pengaturan')" class="inline-flex items-center gap-2 px-3.5 py-2.5 bg-white/10 hover:bg-white/20 text-white border border-white/30 font-semibold text-sm rounded-xl transition-all" title="Identitas & Cetak SK">
+                        <i data-lucide="settings" class="w-4 h-4 text-white"></i>
+                        <span class="hidden sm:inline">Identitas & SK</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4 Stat Cards Ringkasan Utama -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-white/20">
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 sm:p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-sky-200">Pengurus Harian PAC</p>
+                        <p id="stat-pac" class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">0</p>
+                        <p class="text-[11px] text-sky-200/80 mt-0.5">Struktural Tingkat Kecamatan</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-white shrink-0">
+                        <i data-lucide="shield" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 sm:p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-sky-200">Pengurus 10 Ranting</p>
+                        <p id="stat-ranting-slot" class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">0 / 30</p>
+                        <p class="text-[11px] text-sky-200/80 mt-0.5">Slot KSB Ranting Terisi</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-white shrink-0">
+                        <i data-lucide="map" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 sm:p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-sky-200">Total Relawan Aktif</p>
+                        <p id="stat-relawan" class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">0</p>
+                        <p class="text-[11px] text-sky-200/80 mt-0.5">Tim Lapangan & Saksi</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-white shrink-0">
+                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                    </div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-3.5 sm:p-4 flex items-center justify-between">
+                    <div>
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-sky-200">Total Keseluruhan</p>
+                        <p id="stat-total-all" class="text-2xl sm:text-3xl font-extrabold text-white mt-0.5">0</p>
+                        <p class="text-[11px] text-sky-200/80 mt-0.5">Pengurus + Relawan</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center text-white shrink-0">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Tab Navigasi Utama -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex overflow-x-auto no-scrollbar gap-1 sm:gap-2 py-2" role="tablist">
+                <button onclick="switchTab('direktori')" id="tab-btn-direktori" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all bg-pan-800 text-white shadow-sm">
+                    <i data-lucide="database" class="w-4 h-4"></i>
+                    <span>Pengurus Struktural</span>
+                </button>
+                <button onclick="switchTab('relawan')" id="tab-btn-relawan" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                    <span>Data Relawan</span>
+                    <span id="nav-badge-relawan" class="ml-0.5 px-2 py-0.5 text-[11px] rounded-full bg-pan-100 text-pan-800 font-extrabold">0</span>
+                </button>
+                <button onclick="switchTab('struktur')" id="tab-btn-struktur" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="network" class="w-4 h-4"></i>
+                    <span>Struktur PAC & 10 Ranting</span>
+                </button>
+                <button onclick="switchTab('pendaftaran')" id="tab-btn-pendaftaran" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="file-plus-2" class="w-4 h-4"></i>
+                    <span id="tab-label-form">Form Pendaftaran</span>
+                </button>
+                <button onclick="switchTab('pengaturan')" id="tab-btn-pengaturan" class="tab-btn flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-all text-slate-600 hover:bg-slate-100">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>Ekspor & Cetak SK</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+
+        <!-- ============================================================== -->
+        <!-- TAB 1: DIREKTORI PENGURUS STRUKTURAL (PAC & 10 RANTING)        -->
+        <!-- ============================================================== -->
+        <section id="tab-direktori" class="tab-panel space-y-6">
+            <!-- Filter & Pencarian Bar -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                <div class="flex flex-col lg:flex-row gap-4 justify-between">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="filter-search" oninput="renderDirektori()" placeholder="Cari Pengurus Struktural (Nama, NIK, Nomor KTA PAN, atau Jabatan)..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-pan-700 focus:border-pan-700 outline-none transition-all">
+                    </div>
+
+                    <!-- Filter Dropdowns -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <select id="filter-unit" onchange="renderDirektori()" class="px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Unit (PAC & 10 Ranting)</option>
+                            <option value="Pengurus Harian PAC">Pengurus Harian PAC (KSB)</option>
+                            <option value="Ranting 1 - Kelurahan Bantarsari">Ranting 1 - Kelurahan Bantarsari</option>
+                            <option value="Ranting 2 - Kelurahan Bungursari">Ranting 2 - Kelurahan Bungursari</option>
+                            <option value="Ranting 3 - Kelurahan Cibunigeulis">Ranting 3 - Kelurahan Cibunigeulis</option>
+                            <option value="Ranting 4 - Kelurahan Sukajaya">Ranting 4 - Kelurahan Sukajaya</option>
+                            <option value="Ranting 5 - Kelurahan Sukalaksana">Ranting 5 - Kelurahan Sukalaksana</option>
+                            <option value="Ranting 6 - Kelurahan Sukamulya">Ranting 6 - Kelurahan Sukamulya</option>
+                            <option value="Ranting 7 - Kelurahan Sukarindik">Ranting 7 - Kelurahan Sukarindik</option>
+                            <option value="Ranting 8 - Bungursari Utara">Ranting 8 - Bungursari Utara</option>
+                            <option value="Ranting 9 - Bungursari Tengah">Ranting 9 - Bungursari Tengah</option>
+                            <option value="Ranting 10 - Bungursari Selatan">Ranting 10 - Bungursari Selatan</option>
+                        </select>
+
+                        <select id="filter-status" onchange="renderDirektori()" class="px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Status</option>
+                            <option value="Aktif">Aktif (Terverifikasi)</option>
+                            <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                            <option value="Non-Aktif">Non-Aktif</option>
+                        </select>
+
+                        <button onclick="resetFilter()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-1.5 transition-colors">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Data Pengurus Struktural -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 bg-pan-50/70">
+                    <h2 class="font-display font-bold text-slate-800 text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="list-checks" class="w-5 h-5 text-pan-800"></i>
+                        <span>Daftar Pengurus Struktural PAC PAN Bungursari & 10 Ranting</span>
+                    </h2>
+                    <span id="direktori-count-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-pan-100 text-pan-800">
+                        Menampilkan 0 data
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/80 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                <th class="py-3.5 px-4">Pengurus & Identitas</th>
+                                <th class="py-3.5 px-4">Jabatan & Unit Kepengurusan</th>
+                                <th class="py-3.5 px-4 hidden md:table-cell">Kontak & Domisili</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="direktori-tbody" class="divide-y divide-slate-200 text-sm">
+                            <!-- Diisi via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="direktori-empty" class="hidden py-14 px-4 text-center">
+                    <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="user-x" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Data Pengurus Tidak Ditemukan</h3>
+                    <p class="text-slate-500 text-sm max-w-md mx-auto mt-1">Tidak ada pengurus struktural yang sesuai dengan kata kunci pencarian atau filter ranting Anda saat ini.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB BARU: DATA RELAWAN (TERPISAH DARI PENGURUS STRUKTURAL SK)  -->
+        <!-- ============================================================== -->
+        <section id="tab-relawan" class="tab-panel hidden space-y-6">
+            <!-- Header & Action Bar Khusus Relawan -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100">
+                    <div>
+                        <h2 class="font-display font-bold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                            <i data-lucide="heart-handshake" class="w-5 h-5 text-pan-800"></i>
+                            <span>Database Relawan & Tim Pemenangan PAN Bungursari</span>
+                        </h2>
+                        <p class="text-xs text-slate-500 mt-0.5">Terpisah dari Lampiran SK Pengurus Struktural. Terhubung dengan wilayah Ranting 1–10 Kecamatan Bungursari.</p>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <button onclick="openFormNew('Relawan')" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-pan-800 hover:bg-pan-700 text-white text-xs font-bold rounded-xl shadow-sm transition-all">
+                            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+                            <span>Tambah Relawan</span>
+                        </button>
+                        <button onclick="exportRelawanCSV()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-pan-50 hover:bg-pan-100 text-pan-900 border border-pan-200 text-xs font-bold rounded-xl transition-all">
+                            <i data-lucide="download" class="w-3.5 h-3.5 text-pan-800"></i>
+                            <span>Ekspor CSV Relawan</span>
+                        </button>
+                        <button onclick="printDaftarRelawan()" class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl transition-all">
+                            <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                            <span>Cetak Daftar Relawan</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Bar Khusus Relawan -->
+                <div class="flex flex-col lg:flex-row gap-3 justify-between">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="filter-relawan-search" oninput="renderRelawan()" placeholder="Cari Relawan (Nama, NIK, No. WhatsApp, atau Koordinator/TPS)..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-pan-700 outline-none">
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-2.5">
+                        <select id="filter-relawan-ranting" onchange="renderRelawan()" class="px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Ranting / Kelurahan</option>
+                            <option value="Ranting 1 - Kelurahan Bantarsari">Ranting 1 - Kelurahan Bantarsari</option>
+                            <option value="Ranting 2 - Kelurahan Bungursari">Ranting 2 - Kelurahan Bungursari</option>
+                            <option value="Ranting 3 - Kelurahan Cibunigeulis">Ranting 3 - Kelurahan Cibunigeulis</option>
+                            <option value="Ranting 4 - Kelurahan Sukajaya">Ranting 4 - Kelurahan Sukajaya</option>
+                            <option value="Ranting 5 - Kelurahan Sukalaksana">Ranting 5 - Kelurahan Sukalaksana</option>
+                            <option value="Ranting 6 - Kelurahan Sukamulya">Ranting 6 - Kelurahan Sukamulya</option>
+                            <option value="Ranting 7 - Kelurahan Sukarindik">Ranting 7 - Kelurahan Sukarindik</option>
+                            <option value="Ranting 8 - Bungursari Utara">Ranting 8 - Bungursari Utara</option>
+                            <option value="Ranting 9 - Bungursari Tengah">Ranting 9 - Bungursari Tengah</option>
+                            <option value="Ranting 10 - Bungursari Selatan">Ranting 10 - Bungursari Selatan</option>
+                        </select>
+
+                        <select id="filter-relawan-posko" onchange="renderRelawan()" class="px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Tim / Posko</option>
+                            <option value="Posko Pemenangan">Posko Pemenangan</option>
+                            <option value="Tim Saksi TPS">Tim Saksi TPS</option>
+                            <option value="Relawan Lapangan">Relawan Lapangan</option>
+                            <option value="Tim Sosialisasi & Media">Tim Sosialisasi & Media</option>
+                            <option value="Tim Logistik & Pengamanan">Tim Logistik & Pengamanan</option>
+                        </select>
+
+                        <select id="filter-relawan-status" onchange="renderRelawan()" class="px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Status</option>
+                            <option value="Aktif">Aktif</option>
+                            <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                        </select>
+
+                        <button onclick="resetFilterRelawan()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-1.5">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Data Relawan -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-5 py-3.5 border-b border-slate-200 flex items-center justify-between bg-pan-50/60">
+                    <span class="text-xs font-extrabold uppercase tracking-wider text-pan-900">Daftar Anggota Relawan Terdaftar</span>
+                    <span id="relawan-count-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-pan-100 text-pan-800">Menampilkan 0 relawan</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/80 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                <th class="py-3.5 px-4">Nama Relawan & NIK</th>
+                                <th class="py-3.5 px-4">No. WhatsApp</th>
+                                <th class="py-3.5 px-4">Wilayah Ranting / Kelurahan</th>
+                                <th class="py-3.5 px-4">Tim / Posko Relawan</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="relawan-tbody" class="divide-y divide-slate-200 text-sm">
+                            <!-- Diisi via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State Relawan -->
+                <div id="relawan-empty" class="hidden py-14 px-4 text-center">
+                    <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Data Relawan Tidak Ditemukan</h3>
+                    <p class="text-slate-500 text-sm max-w-md mx-auto mt-1">Belum ada relawan yang cocok dengan filter pencarian, atau silakan daftarkan relawan baru.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: FORM PENDAFTARAN / EDIT (PENGURUS & RELAWAN)            -->
+        <!-- ============================================================== -->
+        <section id="tab-pendaftaran" class="tab-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <!-- Header Form -->
+                <div class="bg-gradient-to-r from-pan-950 via-pan-900 to-pan-700 px-6 py-5 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h2 id="form-title" class="font-display text-lg sm:text-xl font-bold flex items-center gap-2">
+                            <i data-lucide="user-plus" class="w-5 h-5 text-white"></i>
+                            <span>Formulir Pendaftaran Pengurus & Relawan PAC PAN Bungursari</span>
+                        </h2>
+                        <p class="text-sky-100 text-xs sm:text-sm mt-0.5">Pilih kategori keanggotaan (Pengurus Harian PAC, Pengurus Ranting 1–10, atau Relawan) lalu lengkapi biodata.</p>
+                    </div>
+                    <button type="button" id="btn-cancel-edit" onclick="resetFormPengurus()" class="hidden px-3.5 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-bold rounded-xl transition-colors self-start sm:self-center">
+                        Batal Edit (Mode Tambah Baru)
+                    </button>
+                </div>
+
+                <form id="form-pengurus" onsubmit="handleSavePengurus(event)" class="p-6 sm:p-8 space-y-8">
+                    <input type="hidden" id="input-id">
+
+                    <!-- Pilihan Kategori Keanggotaan (Radio Card) -->
+                    <div>
+                        <label class="block text-xs font-extrabold uppercase tracking-wider text-pan-800 mb-3">
+                            Pilih Kategori Pendaftaran <span class="text-red-600">*</span>
+                        </label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="kategori-keanggotaan" value="Pengurus Harian PAC" onchange="handleKategoriChange()" class="peer sr-only">
+                                <div class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/60 peer-checked:border-pan-800 peer-checked:bg-pan-50 transition-all h-full">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="w-8 h-8 rounded-lg bg-pan-800 text-white flex items-center justify-center">
+                                            <i data-lucide="shield" class="w-4 h-4"></i>
+                                        </span>
+                                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-pan-100 text-pan-800">Struktural SK</span>
+                                    </div>
+                                    <p class="font-bold text-sm text-slate-900">Pengurus Harian PAC</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">Ketua, Sekretaris, Bendahara & Wakil tingkat Kecamatan Bungursari.</p>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="kategori-keanggotaan" value="Pengurus Ranting" checked onchange="handleKategoriChange()" class="peer sr-only">
+                                <div class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/60 peer-checked:border-pan-800 peer-checked:bg-pan-50 transition-all h-full">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="w-8 h-8 rounded-lg bg-pan-700 text-white flex items-center justify-center">
+                                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                        </span>
+                                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-pan-100 text-pan-800">Struktural SK</span>
+                                    </div>
+                                    <p class="font-bold text-sm text-slate-900">Pengurus Ranting (1–10)</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">Ketua, Sekretaris & Bendahara pada Ranting 1 s/d Ranting 10.</p>
+                                </div>
+                            </label>
+
+                            <label class="cursor-pointer relative">
+                                <input type="radio" name="kategori-keanggotaan" value="Relawan" onchange="handleKategoriChange()" class="peer sr-only">
+                                <div class="p-4 rounded-2xl border-2 border-slate-200 bg-slate-50/60 peer-checked:border-pan-800 peer-checked:bg-pan-50 transition-all h-full">
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center">
+                                            <i data-lucide="heart-handshake" class="w-4 h-4"></i>
+                                        </span>
+                                        <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-sky-100 text-pan-900">Non-SK / Lapangan</span>
+                                    </div>
+                                    <p class="font-bold text-sm text-slate-900">Relawan PAN Bungursari</p>
+                                    <p class="text-xs text-slate-500 mt-0.5">Tim Saksi TPS, Relawan Lapangan, Posko Pemenangan & Media.</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 1: Identitas Pribadi -->
+                    <div>
+                        <h3 class="text-sm font-extrabold uppercase tracking-wider text-pan-800 border-b border-slate-200 pb-2 mb-4 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-pan-800 text-white text-xs flex items-center justify-center">1</span>
+                            Identitas Pribadi (Sesuai KTP-el)
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+                            <!-- Foto Profil Preview & Upload -->
+                            <div class="md:col-span-4 lg:col-span-3 flex flex-col items-center p-4 bg-pan-50/50 rounded-2xl border border-dashed border-pan-300">
+                                <div class="w-28 h-32 rounded-xl bg-slate-200 border-2 border-white shadow-md overflow-hidden mb-3 relative flex items-center justify-center">
+                                    <img id="preview-foto" src="https://placehold.co/300x360/003399/ffffff?text=FOTO+3x4" alt="Preview Foto" class="w-full h-full object-cover">
+                                </div>
+                                <label class="w-full cursor-pointer inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-pan-800 hover:bg-pan-700 text-white text-xs font-bold rounded-lg transition-colors text-center">
+                                    <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                                    <span>Unggah Foto Profil</span>
+                                    <input type="file" id="input-foto-file" accept="image/*" onchange="handleFileUpload(event)" class="hidden">
+                                </label>
+                                <div class="w-full mt-2.5">
+                                    <input type="url" id="input-foto-url" oninput="handleUrlPreview(this.value)" placeholder="Atau tempel URL foto..." class="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:ring-1 focus:ring-pan-700 outline-none">
+                                </div>
+                                <p class="text-[11px] text-slate-500 text-center mt-2">Maks 1.5MB. Disarankan rasio 3x4 berlatar biru/polos.</p>
+                            </div>
+
+                            <!-- Input Biodata -->
+                            <div class="md:col-span-8 lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap & Gelar <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-nama" required placeholder="Contoh: H. Asep Saepudin, S.H." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIK (16 Digit Angka) <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-nik" required maxlength="16" minlength="16" pattern="\d{16}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="327808xxxxxxxxxx" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <p class="text-[11px] text-slate-500 mt-1">Wajib tepat 16 digit angka sesuai KTP.</p>
+                                </div>
+
+                                <div>
+                                    <label id="label-nomor-kartu" class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor KTA PAN (Kosongkan = Otomatis)</label>
+                                    <input type="text" id="input-kta" placeholder="Otomatis dibuat oleh sistem" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempat Lahir <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-tempat-lahir" required placeholder="Contoh: Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tanggal Lahir <span class="text-red-600">*</span></label>
+                                    <input type="date" id="input-tanggal-lahir" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis Kelamin <span class="text-red-600">*</span></label>
+                                    <select id="input-jk" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor HP / WhatsApp Aktif <span class="text-red-600">*</span></label>
+                                    <input type="tel" id="input-wa" required placeholder="0812xxxxxxxx" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pendidikan Terakhir</label>
+                                    <select id="input-pendidikan" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                        <option value="SMA / Sederajat">SMA / Sederajat</option>
+                                        <option value="Diploma (D1/D2/D3)">Diploma (D1/D2/D3)</option>
+                                        <option value="Sarjana (S1)" selected>Sarjana (S1)</option>
+                                        <option value="Magister (S2)">Magister (S2)</option>
+                                        <option value="Doktor (S3)">Doktor (S3)</option>
+                                        <option value="Pesantren / Non-Formal">Pesantren / Non-Formal</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pekerjaan / Profesi</label>
+                                    <input type="text" id="input-pekerjaan" placeholder="Contoh: Wiraswasta / Guru / Pedagang" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Domisili (Kampung/Jalan, RT/RW, Kelurahan di Bungursari) <span class="text-red-600">*</span></label>
+                                    <textarea id="input-alamat" rows="2" required placeholder="Contoh: Kp. Bantarsari RT 02/RW 04, Kel. Bantarsari, Kec. Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 2: Penempatan Dinamis (Struktural PAC / Ranting / Relawan) -->
+                    <div>
+                        <h3 id="section-2-heading" class="text-sm font-extrabold uppercase tracking-wider text-pan-800 border-b border-slate-200 pb-2 mb-4 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-pan-800 text-white text-xs flex items-center justify-center">2</span>
+                            <span>Penempatan Wilayah & Jabatan / Penugasan</span>
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Kolom 1: Unit / Wilayah Ranting -->
+                            <div id="field-unit-wrapper">
+                                <label id="label-unit" class="block text-xs font-bold text-slate-700 uppercase mb-1">Wilayah Ranting (1–10) <span class="text-red-600">*</span></label>
+                                <select id="input-unit" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="Ranting 1 - Kelurahan Bantarsari" selected>Ranting 1 - Kelurahan Bantarsari</option>
+                                    <option value="Ranting 2 - Kelurahan Bungursari">Ranting 2 - Kelurahan Bungursari</option>
+                                    <option value="Ranting 3 - Kelurahan Cibunigeulis">Ranting 3 - Kelurahan Cibunigeulis</option>
+                                    <option value="Ranting 4 - Kelurahan Sukajaya">Ranting 4 - Kelurahan Sukajaya</option>
+                                    <option value="Ranting 5 - Kelurahan Sukalaksana">Ranting 5 - Kelurahan Sukalaksana</option>
+                                    <option value="Ranting 6 - Kelurahan Sukamulya">Ranting 6 - Kelurahan Sukamulya</option>
+                                    <option value="Ranting 7 - Kelurahan Sukarindik">Ranting 7 - Kelurahan Sukarindik</option>
+                                    <option value="Ranting 8 - Bungursari Utara">Ranting 8 - Bungursari Utara</option>
+                                    <option value="Ranting 9 - Bungursari Tengah">Ranting 9 - Bungursari Tengah</option>
+                                    <option value="Ranting 10 - Bungursari Selatan">Ranting 10 - Bungursari Selatan</option>
+                                </select>
+                            </div>
+
+                            <!-- Kolom 2: Jabatan Struktural atau Posko/Tim Relawan -->
+                            <div>
+                                <label id="label-jabatan" class="block text-xs font-bold text-slate-700 uppercase mb-1">Jabatan Struktural <span class="text-red-600">*</span></label>
+                                <select id="input-jabatan" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <!-- Diisi dinamis oleh handleKategoriChange() -->
+                                </select>
+                            </div>
+
+                            <!-- Kolom 3: Status -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Status Keanggotaan <span class="text-red-600">*</span></label>
+                                <select id="input-status" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="Aktif">Aktif (Terverifikasi)</option>
+                                    <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                                    <option value="Non-Aktif">Non-Aktif</option>
+                                </select>
+                            </div>
+
+                            <!-- Field Opsional Khusus Relawan: Koordinator / Nomor TPS -->
+                            <div id="field-koordinator-wrapper" class="hidden sm:col-span-3">
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Koordinator Lapangan / Nomor TPS Tugas (Opsional)</label>
+                                <input type="text" id="input-koordinator" placeholder="Contoh: Korlap Ust. Yayan / TPS 04 Kel. Bantarsari" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3">
+                        <button type="button" onclick="resetFormPengurus()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-colors">
+                            Bersihkan Form
+                        </button>
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-pan-800 hover:bg-pan-700 text-white font-bold text-sm rounded-xl shadow-md transition-all active:scale-95">
+                            <i data-lucide="save" class="w-4 h-4 text-white"></i>
+                            <span id="btn-submit-text">Simpan Data</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: STRUKTUR ORGANISASI (PAC & 10 RANTING)                  -->
+        <!-- ============================================================== -->
+        <section id="tab-struktur" class="tab-panel hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                <div class="text-center max-w-3xl mx-auto mb-8">
+                    <span class="inline-block px-3 py-1 rounded-full bg-pan-100 text-pan-800 text-xs font-extrabold uppercase tracking-wider mb-2">Bagan Kepengurusan Kecamatan Bungursari</span>
+                    <h2 id="struktur-heading" class="font-display text-xl sm:text-2xl font-extrabold text-slate-900">STRUKTUR PAC PAN BUNGURSARI & 10 RANTING</h2>
+                    <p class="text-slate-500 text-sm mt-1">Menampilkan Pimpinan Harian PAC, 3 slot KSB (Ketua, Sekretaris, Bendahara) pada 10 Ranting, serta jumlah Relawan aktif di tiap wilayah Ranting.</p>
+                </div>
+
+                <!-- Pengurus Inti PAC (KSB PAC) -->
+                <div id="struktur-ksb-container" class="space-y-6">
+                    <!-- Dirender dinamis via JS -->
+                </div>
+
+                <!-- Garis Penghubung Visual -->
+                <div class="my-9 flex items-center justify-center">
+                    <div class="w-full border-t-2 border-dashed border-pan-200 relative">
+                        <span class="absolute left-1/2 -translate-x-1/2 -top-3 bg-white px-4 text-xs font-extrabold uppercase tracking-widest text-pan-800 whitespace-nowrap">
+                            10 PENGURUS RANTING (KETUA • SEKRETARIS • BENDAHARA)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Grid 10 Ranting -->
+                <div id="struktur-ranting-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Dirender dinamis via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: EKSPOR & PENGATURAN IDENTITAS PAC PAN                   -->
+        <!-- ============================================================== -->
+        <section id="tab-pengaturan" class="tab-panel hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Pengaturan Identitas PAC PAN -->
+                <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h2 class="font-display text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3 mb-5">
+                        <i data-lucide="building-2" class="w-5 h-5 text-pan-800"></i>
+                        <span>Identitas Organisasi & Periode Kepengurusan</span>
+                    </h2>
+
+                    <form onsubmit="handleSaveSettings(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Resmi Partai / Organisasi</label>
+                            <input type="text" id="set-org-name" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tingkat Kepengurusan</label>
+                                <select id="set-tingkat" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="PENGURUS ANAK CABANG (PAC)" selected>PENGURUS ANAK CABANG (PAC)</option>
+                                    <option value="DEWAN PIMPINAN DAERAH (DPD)">DEWAN PIMPINAN DAERAH (DPD)</option>
+                                    <option value="DEWAN PIMPINAN WILAYAH (DPW)">DEWAN PIMPINAN WILAYAH (DPW)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Periode Kepengurusan (SK)</label>
+                                <input type="text" id="set-periode" placeholder="Contoh: 2025 - 2030" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Wilayah Kecamatan & Kota</label>
+                            <input type="text" id="set-region" required placeholder="Contoh: Kecamatan Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Sekretariat PAC PAN Bungursari</label>
+                            <input type="text" id="set-sekretariat" placeholder="Contoh: Jl. Bungursari No. 45, Kec. Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-pan-800 hover:bg-pan-700 text-white font-bold text-sm rounded-xl shadow transition-all">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-white"></i>
+                                <span>Simpan Perubahan Identitas</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Ekspor Data & Cetak SK -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h2 class="font-display text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3 mb-4">
+                            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-pan-800"></i>
+                            <span>Ekspor & Laporan Resmi PAC PAN</span>
+                        </h2>
+                        <p class="text-sm text-slate-600 mb-5">Lampiran SK hanya mencetak <strong>Pengurus Struktural PAC & 10 Ranting</strong>. Data Relawan memiliki tombol ekspor dan cetak terpisah.</p>
+
+                        <div class="space-y-3">
+                            <button onclick="exportToCSV()" class="w-full flex items-center justify-between p-4 rounded-xl border-2 border-pan-200 bg-pan-50/60 hover:bg-pan-100/70 text-pan-950 transition-all group">
+                                <div class="flex items-center gap-3 text-left">
+                                    <div class="w-10 h-10 rounded-lg bg-pan-800 text-white flex items-center justify-center shrink-0">
+                                        <i data-lucide="download" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-sm">Ekspor Pengurus Struktural ke CSV</p>
+                                        <p class="text-xs text-pan-800">Tabel lengkap Pengurus Harian PAC & 10 Ranting</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-pan-800 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+
+                            <button onclick="printLaporanSK()" class="w-full flex items-center justify-between p-4 rounded-xl border-2 border-pan-800/30 bg-pan-900 hover:bg-pan-800 text-white transition-all group">
+                                <div class="flex items-center gap-3 text-left">
+                                    <div class="w-10 h-10 rounded-lg bg-white text-pan-900 flex items-center justify-center shrink-0">
+                                        <i data-lucide="printer" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-sm">Cetak Lampiran SK Susunan Pengurus</p>
+                                        <p class="text-xs text-sky-200">Surat resmi PAC PAN Bungursari & 10 Ranting (PDF/Print)</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Reset Data Demo -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="font-bold text-sm text-slate-800 mb-1">Reset Data Demo Lokal</h3>
+                        <p class="text-xs text-slate-500 mb-4">Pulihkan data contoh Pengurus PAC, 10 Ranting, dan Relawan Kecamatan Bungursari ke kondisi awal.</p>
+                        <button onclick="confirmResetDemo()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 border border-slate-300 hover:border-red-300 text-xs font-bold rounded-xl transition-colors">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Reset Data Demo</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+            <p class="font-semibold text-pan-900">Sistem Informasi Manajemen Pengurus & Relawan PAC Partai Amanat Nasional (PAN) Bungursari, Kota Tasikmalaya</p>
+            <p>Penyimpanan Lokal Aktif &bull; KTA & Kartu Relawan Digital</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================== -->
+    <!-- MODAL KARTU TANDA ANGGOTA (KTA) / KARTU RELAWAN DIGITAL        -->
+    <!-- ============================================================== -->
+    <div id="modal-kta" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div class="px-5 py-3.5 bg-pan-950 text-white flex items-center justify-between">
+                <span id="modal-kta-header-title" class="font-bold text-sm flex items-center gap-2">
+                    <i data-lucide="id-card" class="w-4 h-4 text-white"></i>
+                    Kartu Tanda Anggota & Pengurus PAN Digital
+                </span>
+                <button onclick="closeModalKTA()" class="p-1 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Kartu KTA Visual (Biru-Putih PAN) -->
+            <div class="p-5 sm:p-6 bg-slate-100 flex justify-center">
+                <div id="kta-card-visual" class="w-full max-w-[420px] rounded-2xl overflow-hidden shadow-xl border border-sky-400/50 bg-gradient-to-br from-pan-950 via-pan-900 to-pan-700 text-white relative">
+                    <!-- Dekorasi Latar Putih Transparan -->
+                    <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-white/5 pointer-events-none"></div>
+                    <div class="absolute right-3 top-14 opacity-10 pointer-events-none">
+                        <svg class="w-32 h-32 text-white" viewBox="0 0 100 100" fill="none">
+                            <rect x="6" y="6" width="88" height="88" rx="10" stroke="#FFFFFF" stroke-width="5"/>
+                            <circle cx="50" cy="40" r="14" fill="#FFFFFF"/>
+                            <polygon points="50,12 46,23 54,23" fill="#FFFFFF"/>
+                            <polygon points="71,19 61,26 66,31" fill="#FFFFFF"/>
+                            <polygon points="29,19 39,26 34,31" fill="#FFFFFF"/>
+                            <rect x="14" y="60" width="72" height="6" fill="#FFFFFF"/>
+                            <rect x="14" y="70" width="72" height="6" fill="#FFFFFF"/>
+                            <rect x="14" y="80" width="72" height="6" fill="#FFFFFF"/>
+                        </svg>
+                    </div>
+
+                    <!-- Header Kartu -->
+                    <div class="px-4 py-3 bg-pan-950/90 border-b border-white/25 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-pan-800 border border-white flex items-center justify-center shrink-0 shadow">
+                            <!-- Logo PAN Putih -->
+                            <svg class="w-8 h-8 text-white" viewBox="0 0 100 100" fill="none">
+                                <rect x="6" y="6" width="88" height="88" rx="10" stroke="#FFFFFF" stroke-width="5" fill="#003399"/>
+                                <circle cx="50" cy="40" r="13" fill="#FFFFFF"/>
+                                <polygon points="50,12 46.5,23 53.5,23" fill="#FFFFFF"/>
+                                <polygon points="70,19 60.5,25.5 65.5,30.5" fill="#FFFFFF"/>
+                                <polygon points="30,19 39.5,25.5 34.5,30.5" fill="#FFFFFF"/>
+                                <polygon points="79,38 67,35.5 67,42.5" fill="#FFFFFF"/>
+                                <polygon points="21,38 33,35.5 33,42.5" fill="#FFFFFF"/>
+                                <rect x="14" y="60" width="72" height="5.5" fill="#FFFFFF"/>
+                                <rect x="14" y="69" width="72" height="5.5" fill="#FFFFFF"/>
+                                <rect x="14" y="78" width="72" height="5.5" fill="#FFFFFF"/>
+                            </svg>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p id="kta-tingkat" class="text-[9px] font-bold uppercase tracking-widest text-sky-200 truncate">PENGURUS ANAK CABANG (PAC)</p>
+                            <h4 id="kta-org-name" class="text-xs font-extrabold uppercase tracking-tight text-white truncate">PARTAI AMANAT NASIONAL (PAN)</h4>
+                            <p id="kta-region" class="text-[10px] text-sky-100 truncate">Kecamatan Bungursari, Kota Tasikmalaya</p>
+                        </div>
+                    </div>
+
+                    <!-- Body Kartu -->
+                    <div class="p-4 flex gap-4 items-center relative z-10">
+                        <div class="w-24 h-28 rounded-xl bg-slate-200 border-2 border-white overflow-hidden shrink-0 shadow-md">
+                            <img id="kta-foto" src="" alt="Foto" class="w-full h-full object-cover">
+                        </div>
+                        <div class="min-w-0 flex-1 space-y-1.5">
+                            <div>
+                                <span class="inline-block px-2.5 py-0.5 rounded bg-white text-pan-900 text-[10px] font-extrabold uppercase tracking-wider" id="kta-jabatan">KETUA PAC</span>
+                            </div>
+                            <h3 id="kta-nama" class="font-display font-extrabold text-base leading-snug text-white">Nama</h3>
+                            <p id="kta-unit" class="text-xs text-sky-200 font-semibold truncate">Unit Kepengurusan</p>
+                            <div class="pt-1 border-t border-white/20 text-[11px] space-y-0.5 text-sky-100">
+                                <p><span class="text-sky-300" id="kta-label-nomor">No. KTA:</span> <span id="kta-nomor" class="font-mono font-bold text-white">-</span></p>
+                                <p><span class="text-sky-300">NIK:</span> <span id="kta-nik" class="font-mono">-</span></p>
+                                <p class="truncate"><span class="text-sky-300">Domisili:</span> <span id="kta-alamat">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Kartu -->
+                    <div class="px-4 py-2 bg-pan-950/95 border-t border-white/15 flex items-center justify-between text-[10px] text-sky-200">
+                        <span id="kta-periode">Masa Bakti: 2025 - 2030</span>
+                        <span id="kta-status-badge" class="font-bold text-white uppercase">TERVERIFIKASI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-5 py-3.5 bg-white border-t border-slate-200 flex items-center justify-end gap-2.5">
+                <button onclick="closeModalKTA()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl">Tutup</button>
+                <button onclick="printSingleKTA()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-pan-800 hover:bg-pan-700 text-white text-xs font-bold rounded-xl shadow">
+                    <i data-lucide="printer" class="w-3.5 h-3.5 text-white"></i>
+                    <span id="btn-print-kta-label">Cetak Kartu</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL KONFIRMASI HAPUS / RESET                                 -->
+    <!-- ============================================================== -->
+        <!-- TAB 1: DIREKTORI & DATA PENGURUS                               -->
+        <!-- ============================================================== -->
+        <section id="tab-direktori" class="tab-panel space-y-6">
+            <!-- Filter & Pencarian Bar -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-5">
+                <div class="flex flex-col lg:flex-row gap-4 justify-between">
+                    <!-- Search Input -->
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="filter-search" oninput="renderDirektori()" placeholder="Cari berdasarkan Nama, NIK, Nomor KTA PAN, atau Jabatan..." class="w-full pl-11 pr-4 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-pan-700 focus:border-pan-700 outline-none transition-all">
+                    </div>
+
+                    <!-- Filter Dropdowns -->
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <select id="filter-unit" onchange="renderDirektori()" class="px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Unit (PAC & 10 Ranting)</option>
+                            <option value="Pengurus Harian PAC">Pengurus Harian PAC (KSB)</option>
+                            <option value="Ranting 01 - Kelurahan Bantarsari">Ranting 01 - Kelurahan Bantarsari</option>
+                            <option value="Ranting 02 - Kelurahan Bungursari">Ranting 02 - Kelurahan Bungursari</option>
+                            <option value="Ranting 03 - Kelurahan Cibunigeulis">Ranting 03 - Kelurahan Cibunigeulis</option>
+                            <option value="Ranting 04 - Kelurahan Sukajaya">Ranting 04 - Kelurahan Sukajaya</option>
+                            <option value="Ranting 05 - Kelurahan Sukalaksana">Ranting 05 - Kelurahan Sukalaksana</option>
+                            <option value="Ranting 06 - Kelurahan Sukamulya">Ranting 06 - Kelurahan Sukamulya</option>
+                            <option value="Ranting 07 - Kelurahan Sukarindik">Ranting 07 - Kelurahan Sukarindik</option>
+                            <option value="Ranting 08 - Ranting Khusus / Sayap Wilayah VIII">Ranting 08 - Ranting Khusus / Sayap Wilayah VIII</option>
+                            <option value="Ranting 09 - Ranting Khusus / Sayap Wilayah IX">Ranting 09 - Ranting Khusus / Sayap Wilayah IX</option>
+                            <option value="Ranting 10 - Ranting Khusus / Sayap Wilayah X">Ranting 10 - Ranting Khusus / Sayap Wilayah X</option>
+                        </select>
+
+                        <select id="filter-status" onchange="renderDirektori()" class="px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-medium text-slate-700 focus:ring-2 focus:ring-pan-700 outline-none">
+                            <option value="">Semua Status</option>
+                            <option value="Aktif">Aktif (Terverifikasi)</option>
+                            <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                            <option value="Non-Aktif">Non-Aktif</option>
+                        </select>
+
+                        <button onclick="resetFilter()" class="px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-sm font-semibold inline-flex items-center justify-center gap-1.5 transition-colors">
+                            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                            <span>Reset</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabel Data Pengurus -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-5 py-4 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 bg-pan-50/60">
+                    <h2 class="font-display font-bold text-slate-800 text-base sm:text-lg flex items-center gap-2">
+                        <i data-lucide="list-checks" class="w-5 h-5 text-pan-800"></i>
+                        <span>Daftar Pengurus PAC PAN Bungursari & 10 Ranting</span>
+                    </h2>
+                    <span id="direktori-count-badge" class="text-xs font-bold px-3 py-1 rounded-full bg-pan-100 text-pan-800">
+                        Menampilkan 0 data
+                    </span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100/80 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-600">
+                                <th class="py-3.5 px-4">Pengurus & Identitas</th>
+                                <th class="py-3.5 px-4">Jabatan & Unit Kepengurusan</th>
+                                <th class="py-3.5 px-4 hidden md:table-cell">Kontak & Domisili</th>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4 text-right">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="direktori-tbody" class="divide-y divide-slate-200 text-sm">
+                            <!-- Diisi via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="direktori-empty" class="hidden py-14 px-4 text-center">
+                    <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="user-x" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-base">Data Pengurus Tidak Ditemukan</h3>
+                    <p class="text-slate-500 text-sm max-w-md mx-auto mt-1">Tidak ada pengurus yang sesuai dengan kata kunci pencarian atau filter ranting Anda saat ini.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 2: FORM PENDAFTARAN / EDIT PENGURUS                        -->
+        <!-- ============================================================== -->
+        <section id="tab-pendaftaran" class="tab-panel hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                <!-- Header Form -->
+                <div class="bg-gradient-to-r from-pan-950 via-pan-900 to-pan-700 px-6 py-5 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <h2 id="form-title" class="font-display text-lg sm:text-xl font-bold flex items-center gap-2">
+                            <i data-lucide="user-plus" class="w-5 h-5 text-sun-400"></i>
+                            <span>Formulir Pendaftaran Pengurus PAC / Ranting PAN Bungursari</span>
+                        </h2>
+                        <p class="text-sky-100 text-xs sm:text-sm mt-0.5">Lengkapi biodata pengurus sesuai KTP-el dan penempatan pada Pengurus Harian PAC atau Ranting 01–10.</p>
+                    </div>
+                    <button type="button" id="btn-cancel-edit" onclick="resetFormPengurus()" class="hidden px-3.5 py-2 bg-white/15 hover:bg-white/25 text-white text-xs font-bold rounded-xl transition-colors self-start sm:self-center">
+                        Batal Edit (Mode Tambah Baru)
+                    </button>
+                </div>
+
+                <form id="form-pengurus" onsubmit="handleSavePengurus(event)" class="p-6 sm:p-8 space-y-8">
+                    <input type="hidden" id="input-id">
+
+                    <!-- Bagian 1: Identitas Pribadi -->
+                    <div>
+                        <h3 class="text-sm font-extrabold uppercase tracking-wider text-pan-800 border-b border-slate-200 pb-2 mb-4 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-pan-800 text-white text-xs flex items-center justify-center">1</span>
+                            Identitas Pribadi (Sesuai KTP-el)
+                        </h3>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+                            <!-- Foto Profil Preview & Upload -->
+                            <div class="md:col-span-4 lg:col-span-3 flex flex-col items-center p-4 bg-pan-50/50 rounded-2xl border border-dashed border-pan-300">
+                                <div class="w-28 h-32 rounded-xl bg-slate-200 border-2 border-white shadow-md overflow-hidden mb-3 relative flex items-center justify-center">
+                                    <img id="preview-foto" src="https://placehold.co/300x360/003399/ffffff?text=FOTO+3x4" alt="Preview Foto" class="w-full h-full object-cover">
+                                </div>
+                                <label class="w-full cursor-pointer inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-pan-800 hover:bg-pan-700 text-white text-xs font-bold rounded-lg transition-colors text-center">
+                                    <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                                    <span>Unggah Foto Profil</span>
+                                    <input type="file" id="input-foto-file" accept="image/*" onchange="handleFileUpload(event)" class="hidden">
+                                </label>
+                                <div class="w-full mt-2.5">
+                                    <input type="url" id="input-foto-url" oninput="handleUrlPreview(this.value)" placeholder="Atau tempel URL foto..." class="w-full px-2.5 py-1.5 text-xs bg-white border border-slate-300 rounded-lg focus:ring-1 focus:ring-pan-700 outline-none">
+                                </div>
+                                <p class="text-[11px] text-slate-500 text-center mt-2">Maks 1.5MB. Disarankan rasio 3x4 berlatar biru/polos.</p>
+                            </div>
+
+                            <!-- Input Biodata -->
+                            <div class="md:col-span-8 lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Lengkap & Gelar <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-nama" required placeholder="Contoh: H. Asep Saepudin, S.H." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">NIK (16 Digit Angka) <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-nik" required maxlength="16" minlength="16" pattern="\d{16}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="327808xxxxxxxxxx" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <p class="text-[11px] text-slate-500 mt-1">Wajib tepat 16 digit angka sesuai KTP.</p>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor KTA PAN (Kosongkan = Otomatis)</label>
+                                    <input type="text" id="input-kta" placeholder="Contoh: KTA-PAN-BGR-2026-0001" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-mono focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempat Lahir <span class="text-red-600">*</span></label>
+                                    <input type="text" id="input-tempat-lahir" required placeholder="Contoh: Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tanggal Lahir <span class="text-red-600">*</span></label>
+                                    <input type="date" id="input-tanggal-lahir" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jenis Kelamin <span class="text-red-600">*</span></label>
+                                    <select id="input-jk" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                        <option value="Laki-laki">Laki-laki</option>
+                                        <option value="Perempuan">Perempuan</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nomor HP / WhatsApp Aktif <span class="text-red-600">*</span></label>
+                                    <input type="tel" id="input-wa" required placeholder="0812xxxxxxxx" oninput="this.value = this.value.replace(/[^0-9+]/g, '')" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pendidikan Terakhir</label>
+                                    <select id="input-pendidikan" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                        <option value="SMA / Sederajat">SMA / Sederajat</option>
+                                        <option value="Diploma (D1/D2/D3)">Diploma (D1/D2/D3)</option>
+                                        <option value="Sarjana (S1)" selected>Sarjana (S1)</option>
+                                        <option value="Magister (S2)">Magister (S2)</option>
+                                        <option value="Doktor (S3)">Doktor (S3)</option>
+                                        <option value="Pesantren / Non-Formal">Pesantren / Non-Formal</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Pekerjaan / Profesi</label>
+                                    <input type="text" id="input-pekerjaan" placeholder="Contoh: Wiraswasta / Guru / Pedagang" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                </div>
+
+                                <div class="sm:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Domisili (Kampung/Jalan, RT/RW, Kelurahan di Bungursari) <span class="text-red-600">*</span></label>
+                                    <textarea id="input-alamat" rows="2" required placeholder="Contoh: Kp. Bantarsari RT 02/RW 04, Kel. Bantarsari, Kec. Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bagian 2: Penempatan Struktur PAC atau 10 Ranting -->
+                    <div>
+                        <h3 class="text-sm font-extrabold uppercase tracking-wider text-pan-800 border-b border-slate-200 pb-2 mb-4 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-pan-800 text-white text-xs flex items-center justify-center">2</span>
+                            Unit Kepengurusan (PAC / 10 Ranting) & Jabatan Struktural
+                        </h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Unit Kepengurusan <span class="text-red-600">*</span></label>
+                                <select id="input-unit" required onchange="syncJabatanOptionsByUnit()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="Pengurus Harian PAC">Pengurus Harian PAC (KSB PAC)</option>
+                                    <option value="Ranting 01 - Kelurahan Bantarsari" selected>Ranting 01 - Kelurahan Bantarsari</option>
+                                    <option value="Ranting 02 - Kelurahan Bungursari">Ranting 02 - Kelurahan Bungursari</option>
+                                    <option value="Ranting 03 - Kelurahan Cibunigeulis">Ranting 03 - Kelurahan Cibunigeulis</option>
+                                    <option value="Ranting 04 - Kelurahan Sukajaya">Ranting 04 - Kelurahan Sukajaya</option>
+                                    <option value="Ranting 05 - Kelurahan Sukalaksana">Ranting 05 - Kelurahan Sukalaksana</option>
+                                    <option value="Ranting 06 - Kelurahan Sukamulya">Ranting 06 - Kelurahan Sukamulya</option>
+                                    <option value="Ranting 07 - Kelurahan Sukarindik">Ranting 07 - Kelurahan Sukarindik</option>
+                                    <option value="Ranting 08 - Ranting Khusus / Sayap Wilayah VIII">Ranting 08 - Ranting Khusus / Sayap Wilayah VIII</option>
+                                    <option value="Ranting 09 - Ranting Khusus / Sayap Wilayah IX">Ranting 09 - Ranting Khusus / Sayap Wilayah IX</option>
+                                    <option value="Ranting 10 - Ranting Khusus / Sayap Wilayah X">Ranting 10 - Ranting Khusus / Sayap Wilayah X</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Jabatan Struktural <span class="text-red-600">*</span></label>
+                                <select id="input-jabatan" required onchange="autoSelectUnitByJabatan()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <optgroup label="Pimpinan Harian PAC">
+                                        <option value="Ketua PAC">Ketua PAC</option>
+                                        <option value="Wakil Ketua PAC">Wakil Ketua PAC</option>
+                                        <option value="Sekretaris PAC">Sekretaris PAC</option>
+                                        <option value="Wakil Sekretaris PAC">Wakil Sekretaris PAC</option>
+                                        <option value="Bendahara PAC">Bendahara PAC</option>
+                                        <option value="Wakil Bendahara PAC">Wakil Bendahara PAC</option>
+                                    </optgroup>
+                                    <optgroup label="Pengurus Ranting (01 - 10)">
+                                        <option value="Ketua Ranting" selected>Ketua Ranting</option>
+                                        <option value="Sekretaris Ranting">Sekretaris Ranting</option>
+                                        <option value="Bendahara Ranting">Bendahara Ranting</option>
+                                        <option value="Anggota Ranting">Anggota Ranting</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Status Keanggotaan / SK <span class="text-red-600">*</span></label>
+                                <select id="input-status" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="Aktif">Aktif (Terverifikasi SK)</option>
+                                    <option value="Menunggu Verifikasi">Menunggu Verifikasi</option>
+                                    <option value="Non-Aktif">Non-Aktif</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Submit -->
+                    <div class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3">
+                        <button type="button" onclick="resetFormPengurus()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-colors">
+                            Bersihkan Form
+                        </button>
+                        <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 bg-pan-800 hover:bg-pan-700 text-white font-bold text-sm rounded-xl shadow-md transition-all active:scale-95">
+                            <i data-lucide="save" class="w-4 h-4 text-sun-400"></i>
+                            <span id="btn-submit-text">Simpan Data Pengurus</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 3: STRUKTUR ORGANISASI (PAC & 10 RANTING)                  -->
+        <!-- ============================================================== -->
+        <section id="tab-struktur" class="tab-panel hidden space-y-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+                <div class="text-center max-w-3xl mx-auto mb-8">
+                    <span class="inline-block px-3 py-1 rounded-full bg-pan-100 text-pan-800 text-xs font-extrabold uppercase tracking-wider mb-2">Bagan Kepengurusan Kecamatan Bungursari</span>
+                    <h2 id="struktur-heading" class="font-display text-xl sm:text-2xl font-extrabold text-slate-900">STRUKTUR PAC PAN BUNGURSARI & 10 RANTING</h2>
+                    <p class="text-slate-500 text-sm mt-1">Menampilkan jajaran Pimpinan Harian PAC (Ketua, Sekretaris, Bendahara) serta komposisi lengkap Ketua, Sekretaris, dan Bendahara di 10 Ranting.</p>
+                </div>
+
+                <!-- Pengurus Inti PAC (KSB PAC) -->
+                <div id="struktur-ksb-container" class="space-y-6">
+                    <!-- Dirender dinamis via JS -->
+                </div>
+
+                <!-- Garis Penghubung Visual -->
+                <div class="my-9 flex items-center justify-center">
+                    <div class="w-full border-t-2 border-dashed border-pan-200 relative">
+                        <span class="absolute left-1/2 -translate-x-1/2 -top-3 bg-white px-4 text-xs font-extrabold uppercase tracking-widest text-pan-800 whitespace-nowrap">
+                            10 PENGURUS RANTING (KETUA • SEKRETARIS • BENDAHARA)
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Grid 10 Ranting -->
+                <div id="struktur-ranting-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Dirender dinamis via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- TAB 4: EKSPOR & PENGATURAN IDENTITAS PAC PAN                   -->
+        <!-- ============================================================== -->
+        <section id="tab-pengaturan" class="tab-panel hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Pengaturan Identitas PAC PAN -->
+                <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                    <h2 class="font-display text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3 mb-5">
+                        <i data-lucide="building-2" class="w-5 h-5 text-pan-800"></i>
+                        <span>Identitas Organisasi & Periode Kepengurusan</span>
+                    </h2>
+
+                    <form onsubmit="handleSaveSettings(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Resmi Partai / Organisasi</label>
+                            <input type="text" id="set-org-name" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Tingkat Kepengurusan</label>
+                                <select id="set-tingkat" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                                    <option value="PENGURUS ANAK CABANG (PAC)" selected>PENGURUS ANAK CABANG (PAC)</option>
+                                    <option value="DEWAN PIMPINAN DAERAH (DPD)">DEWAN PIMPINAN DAERAH (DPD)</option>
+                                    <option value="DEWAN PIMPINAN WILAYAH (DPW)">DEWAN PIMPINAN WILAYAH (DPW)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Periode Kepengurusan (SK)</label>
+                                <input type="text" id="set-periode" placeholder="Contoh: 2025 - 2030" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Wilayah Kecamatan & Kota</label>
+                            <input type="text" id="set-region" required placeholder="Contoh: Kecamatan Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-semibold focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Alamat Sekretariat PAC PAN Bungursari</label>
+                            <input type="text" id="set-sekretariat" placeholder="Contoh: Jl. Letjen Mashudi / Jl. Bungursari No. 45, Kec. Bungursari, Kota Tasikmalaya" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-pan-700 outline-none">
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="submit" class="inline-flex items-center gap-2 px-5 py-2.5 bg-pan-800 hover:bg-pan-700 text-white font-bold text-sm rounded-xl shadow transition-all">
+                                <i data-lucide="check-circle-2" class="w-4 h-4 text-sun-400"></i>
+                                <span>Simpan Perubahan Identitas</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Ekspor Data & Cetak SK -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h2 class="font-display text-lg font-bold text-slate-900 flex items-center gap-2 border-b border-slate-200 pb-3 mb-4">
+                            <i data-lucide="file-spreadsheet" class="w-5 h-5 text-emerald-700"></i>
+                            <span>Ekspor & Laporan Resmi PAC PAN</span>
+                        </h2>
+                        <p class="text-sm text-slate-600 mb-5">Unduh seluruh database pengurus PAC dan 10 Ranting untuk arsip DPD PAN Kota Tasikmalaya, atau cetak lampiran Surat Keputusan (SK).</p>
+
+                        <div class="space-y-3">
+                            <button onclick="exportToCSV()" class="w-full flex items-center justify-between p-4 rounded-xl border-2 border-emerald-600/20 bg-emerald-50/60 hover:bg-emerald-100/70 text-emerald-950 transition-all group">
+                                <div class="flex items-center gap-3 text-left">
+                                    <div class="w-10 h-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                                        <i data-lucide="download" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-sm">Ekspor Database ke CSV (Excel)</p>
+                                        <p class="text-xs text-emerald-800">Format tabel lengkap PAC & 10 Ranting siap olah di Excel</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-emerald-700 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+
+                            <button onclick="printLaporanSK()" class="w-full flex items-center justify-between p-4 rounded-xl border-2 border-pan-800/20 bg-pan-50/70 hover:bg-pan-100/70 text-pan-950 transition-all group">
+                                <div class="flex items-center gap-3 text-left">
+                                    <div class="w-10 h-10 rounded-lg bg-pan-800 text-sun-400 flex items-center justify-center shrink-0">
+                                        <i data-lucide="printer" class="w-5 h-5"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-sm">Cetak Lampiran SK Susunan Pengurus</p>
+                                        <p class="text-xs text-pan-800">Surat resmi PAC PAN Bungursari & 10 Ranting siap cetak / PDF</p>
+                                    </div>
+                                </div>
+                                <i data-lucide="chevron-right" class="w-5 h-5 text-pan-800 group-hover:translate-x-1 transition-transform"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Reset Data Demo -->
+                    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <h3 class="font-bold text-sm text-slate-800 mb-1">Manajemen Data Lokal (Browser)</h3>
+                        <p class="text-xs text-slate-500 mb-4">Data tersimpan otomatis di browser Anda. Anda dapat memulihkan data contoh PAC PAN Bungursari jika diperlukan.</p>
+                        <button onclick="confirmResetDemo()" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-red-50 text-slate-700 hover:text-red-700 border border-slate-300 hover:border-red-300 text-xs font-bold rounded-xl transition-colors">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Pulihkan Data Awal PAC PAN Bungursari</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 mt-auto no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+            <p class="font-semibold text-pan-900">Sistem Informasi Manajemen & Pendataan Pengurus Anak Cabang Partai Amanat Nasional (PAN) Bungursari, Kota Tasikmalaya</p>
+            <p>Penyimpanan Lokal Aktif &bull; Siap Cetak KTA & Lampiran SK</p>
+        </div>
+    </footer>
+
+    <!-- ============================================================== -->
+    <!-- MODAL KARTU TANDA ANGGOTA (KTA) DIGITAL                        -->
+    <!-- ============================================================== -->
+    <div id="modal-kta" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div class="px-5 py-3.5 bg-pan-950 text-white flex items-center justify-between">
+                <span class="font-bold text-sm flex items-center gap-2">
+                    <i data-lucide="id-card" class="w-4 h-4 text-sun-400"></i>
+                    Kartu Tanda Anggota & Pengurus PAN Digital
+                </span>
+                <button onclick="closeModalKTA()" class="p-1 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Kartu KTA Visual -->
+            <div class="p-5 sm:p-6 bg-slate-100 flex justify-center">
+                <div id="kta-card-visual" class="w-full max-w-[420px] rounded-2xl overflow-hidden shadow-xl border border-sky-400/50 bg-gradient-to-br from-pan-950 via-pan-900 to-pan-700 text-white relative">
+                    <!-- Dekorasi Latar Matahari PAN -->
+                    <div class="absolute -right-12 -bottom-12 w-48 h-48 rounded-full bg-sky-400/10 pointer-events-none"></div>
+                    <div class="absolute right-3 top-14 opacity-15 pointer-events-none">
+                        <svg class="w-32 h-32 text-sun-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="5" fill="currentColor"/>
+                            <path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+                        </svg>
+                    </div>
+
+                    <!-- Header Kartu -->
+                    <div class="px-4 py-3 bg-pan-950/90 border-b border-sky-400/40 flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-white text-pan-900 flex flex-col items-center justify-center font-extrabold shrink-0 shadow">
+                            <svg class="w-4 h-4 text-sun-500" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="12" r="6"/>
+                            </svg>
+                            <span class="text-[8px] font-black leading-none tracking-wider">PAN</span>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <p id="kta-tingkat" class="text-[9px] font-bold uppercase tracking-widest text-sky-300 truncate">PENGURUS ANAK CABANG (PAC)</p>
+                            <h4 id="kta-org-name" class="text-xs font-extrabold uppercase tracking-tight text-white truncate">PARTAI AMANAT NASIONAL (PAN)</h4>
+                            <p id="kta-region" class="text-[10px] text-sky-100 truncate">Kecamatan Bungursari, Kota Tasikmalaya</p>
+                        </div>
+                    </div>
+
+                    <!-- Body Kartu -->
+                    <div class="p-4 flex gap-4 items-center relative z-10">
+                        <div class="w-24 h-28 rounded-xl bg-slate-200 border-2 border-white overflow-hidden shrink-0 shadow-md">
+                            <img id="kta-foto" src="" alt="Foto Pengurus" class="w-full h-full object-cover">
+                        </div>
+                        <div class="min-w-0 flex-1 space-y-1.5">
+                            <div>
+                                <span class="inline-block px-2 py-0.5 rounded bg-sun-400 text-pan-950 text-[10px] font-extrabold uppercase tracking-wider" id="kta-jabatan">KETUA PAC</span>
+                            </div>
+                            <h3 id="kta-nama" class="font-display font-extrabold text-base leading-snug text-white">Nama Pengurus</h3>
+                            <p id="kta-unit" class="text-xs text-sky-200 font-semibold truncate">Unit Kepengurusan</p>
+                            <div class="pt-1 border-t border-white/15 text-[11px] space-y-0.5 text-sky-100">
+                                <p><span class="text-sky-300">No. KTA:</span> <span id="kta-nomor" class="font-mono font-bold text-white">-</span></p>
+                                <p><span class="text-sky-300">NIK:</span> <span id="kta-nik" class="font-mono">-</span></p>
+                                <p class="truncate"><span class="text-sky-300">Domisili:</span> <span id="kta-alamat">-</span></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Kartu -->
+                    <div class="px-4 py-2 bg-pan-950/95 border-t border-white/10 flex items-center justify-between text-[10px] text-sky-200">
+                        <span id="kta-periode">Masa Bakti: 2025 - 2030</span>
+                        <span id="kta-status-badge" class="font-bold text-emerald-400 uppercase">TERVERIFIKASI</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="px-5 py-3.5 bg-white border-t border-slate-200 flex items-center justify-end gap-2.5">
+                <button onclick="closeModalKTA()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl">Tutup</button>
+                <button onclick="printSingleKTA()" class="inline-flex items-center gap-1.5 px-4 py-2 bg-pan-800 hover:bg-pan-700 text-white text-xs font-bold rounded-xl shadow">
+                    <i data-lucide="printer" class="w-3.5 h-3.5 text-sun-400"></i>
+                    <span>Cetak KTA</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- MODAL KONFIRMASI HAPUS / RESET (PENGGANTI CONFIRM() BAWAAN)    -->
+    <!-- ============================================================== -->
+    <div id="modal-confirm" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
+            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mb-4">
+                <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            </div>
+            <h3 id="confirm-title" class="font-display font-bold text-lg text-slate-900">Konfirmasi Tindakan</h3>
+            <p id="confirm-message" class="text-sm text-slate-600 mt-1.5">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
+            <div class="mt-6 flex items-center justify-end gap-3">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-bold rounded-xl">Batal</button>
+                <button id="confirm-yes-btn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-bold rounded-xl shadow">Ya, Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Area Khusus Print (Tersembunyi di layar, muncul saat window.print()) -->
+    <div id="print-area" class="hidden"></div>
+
+    <script>
+        // =========================================================================
+        // STATE & KONFIGURASI DEFAULT APLIKASI (PAC PAN BUNGURSARI V2)
+        // =========================================================================
+        const STORAGE_KEY_DATA = 'sim_pac_pan_bungursari_v2';
+        const STORAGE_KEY_SETTINGS = 'sim_pac_pan_bungursari_settings_v2';
+
+        const DAFTAR_RANTING = [
+            'Ranting 1 - Kelurahan Bantarsari',
+            'Ranting 2 - Kelurahan Bungursari',
+            'Ranting 3 - Kelurahan Cibunigeulis',
+            'Ranting 4 - Kelurahan Sukajaya',
+            'Ranting 5 - Kelurahan Sukalaksana',
+            'Ranting 6 - Kelurahan Sukamulya',
+            'Ranting 7 - Kelurahan Sukarindik',
+            'Ranting 8 - Bungursari Utara',
+            'Ranting 9 - Bungursari Tengah',
+            'Ranting 10 - Bungursari Selatan'
+        ];
+
+        const JABATAN_PAC_LIST = [
+            'Ketua PAC',
+            'Wakil Ketua PAC',
+            'Sekretaris PAC',
+            'Wakil Sekretaris PAC',
+            'Bendahara PAC',
+            'Wakil Bendahara PAC'
+        ];
+
+        const JABATAN_RANTING_LIST = [
+            'Ketua Ranting',
+            'Sekretaris Ranting',
+            'Bendahara Ranting'
+        ];
+
+        const POSKO_RELAWAN_LIST = [
+            'Posko Pemenangan',
+            'Tim Saksi TPS',
+            'Relawan Lapangan',
+            'Tim Sosialisasi & Media',
+            'Tim Logistik & Pengamanan'
+        ];
+
+        const DEFAULT_SETTINGS = {
+            orgName: 'PARTAI AMANAT NASIONAL (PAN)',
+            tingkat: 'PENGURUS ANAK CABANG (PAC)',
+            region: 'Kecamatan Bungursari, Kota Tasikmalaya',
+            periode: '2025 - 2030',
+            sekretariat: 'Jl. Bungursari No. 45, Kel. Bungursari, Kec. Bungursari, Kota Tasikmalaya'
+        };
+
+        const DEFAULT_MEMBERS = [
+            // ================= PENGURUS HARIAN PAC (STRUKTURAL) =================
+            {
+                id: 'pan-001',
+                kategori: 'Pengurus Harian PAC',
+                nama: 'H. Dedi Suryadi, S.H., M.H.',
+                nik: '3278081405790001',
+                kta: 'KTA-PAN-BGR-2025-0001',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1979-05-14',
+                jk: 'Laki-laki',
+                wa: '081221778801',
+                pendidikan: 'Magister (S2)',
+                pekerjaan: 'Pengusaha & Advokat',
+                alamat: 'Jl. Bungursari No. 18, RT 02/RW 03, Kel. Bungursari, Kec. Bungursari',
+                jabatan: 'Ketua PAC',
+                unit: 'Pengurus Harian PAC',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/003399/ffffff?text=KETUA+PAC'
+            },
+            {
+                id: 'pan-002',
+                kategori: 'Pengurus Harian PAC',
+                nama: 'Acep Ridwan Fauzi, S.IP.',
+                nik: '3278082109870002',
+                kta: 'KTA-PAN-BGR-2025-0002',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1987-09-21',
+                jk: 'Laki-laki',
+                wa: '085223667702',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Wiraswasta & Aktivis Pemuda',
+                alamat: 'Kp. Bantarsari RT 01/RW 05, Kel. Bantarsari, Kec. Bungursari',
+                jabatan: 'Sekretaris PAC',
+                unit: 'Pengurus Harian PAC',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/0047AB/ffffff?text=SEKRETARIS+PAC'
+            },
+            {
+                id: 'pan-003',
+                kategori: 'Pengurus Harian PAC',
+                nama: 'Hj. Rina Marlina, S.E.',
+                nik: '3278085203840003',
+                kta: 'KTA-PAN-BGR-2025-0003',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1984-03-12',
+                jk: 'Perempuan',
+                wa: '081320554403',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Pengusaha Konveksi & Bordir',
+                alamat: 'Perum Bumi Bungursari Indah Blok B-07, Kel. Sukamulya, Kec. Bungursari',
+                jabatan: 'Bendahara PAC',
+                unit: 'Pengurus Harian PAC',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/002266/ffffff?text=BENDAHARA+PAC'
+            },
+
+            // ================= PENGURUS RANTING (1 - 10) =================
+            {
+                id: 'pan-r01-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'Ust. Yayan Suryana, S.Pd.I.',
+                nik: '3278081104830004',
+                kta: 'KTA-PAN-BGR-2025-0101',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1983-04-11',
+                jk: 'Laki-laki',
+                wa: '082118990101',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Guru & Tokoh Masyarakat',
+                alamat: 'Kp. Cilembang Bantarsari RT 03/RW 02, Kel. Bantarsari',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 1 - Kelurahan Bantarsari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+1'
+            },
+            {
+                id: 'pan-r01-2',
+                kategori: 'Pengurus Ranting',
+                nama: 'Dadan Hamdani, S.Kom.',
+                nik: '3278081908920005',
+                kta: 'KTA-PAN-BGR-2025-0102',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1992-08-19',
+                jk: 'Laki-laki',
+                wa: '085798001102',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Staf Administrasi',
+                alamat: 'Kp. Gunung Roay RT 01/RW 06, Kel. Bantarsari',
+                jabatan: 'Sekretaris Ranting',
+                unit: 'Ranting 1 - Kelurahan Bantarsari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/2563eb/ffffff?text=SEK+RTG+1'
+            },
+            {
+                id: 'pan-r01-3',
+                kategori: 'Pengurus Ranting',
+                nama: 'Neng Elis Kartika, A.Md.',
+                nik: '3278086507940006',
+                kta: 'KTA-PAN-BGR-2025-0103',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1994-07-25',
+                jk: 'Perempuan',
+                wa: '087823110103',
+                pendidikan: 'Diploma (D1/D2/D3)',
+                pekerjaan: 'Pelaku UMKM Kuliner',
+                alamat: 'Kp. Bantarsari Kidul RT 04/RW 01, Kel. Bantarsari',
+                jabatan: 'Bendahara Ranting',
+                unit: 'Ranting 1 - Kelurahan Bantarsari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/0047AB/ffffff?text=BEND+RTG+1'
+            },
+            {
+                id: 'pan-r02-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'H. Tatang Koswara',
+                nik: '3278080702760007',
+                kta: 'KTA-PAN-BGR-2025-0201',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1976-02-07',
+                jk: 'Laki-laki',
+                wa: '081222330201',
+                pendidikan: 'SMA / Sederajat',
+                pekerjaan: 'Pedagang Material',
+                alamat: 'Kp. Bungursari Tengah RT 02/RW 04, Kel. Bungursari',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 2 - Kelurahan Bungursari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+2'
+            },
+            {
+                id: 'pan-r02-2',
+                kategori: 'Pengurus Ranting',
+                nama: 'Rian Hidayatulloh, S.Pd.',
+                nik: '3278082811930008',
+                kta: 'KTA-PAN-BGR-2025-0202',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1993-11-28',
+                jk: 'Laki-laki',
+                wa: '085220440202',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Tenaga Pendidik',
+                alamat: 'Kp. Cikadongdong RT 01/RW 03, Kel. Bungursari',
+                jabatan: 'Sekretaris Ranting',
+                unit: 'Ranting 2 - Kelurahan Bungursari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/2563eb/ffffff?text=SEK+RTG+2'
+            },
+            {
+                id: 'pan-r02-3',
+                kategori: 'Pengurus Ranting',
+                nama: 'Ai Siti Rohmah',
+                nik: '3278084906890009',
+                kta: 'KTA-PAN-BGR-2025-0203',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1989-06-09',
+                jk: 'Perempuan',
+                wa: '089655660203',
+                pendidikan: 'SMA / Sederajat',
+                pekerjaan: 'Wiraswasta',
+                alamat: 'Kp. Bungursari Kulon RT 03/RW 02, Kel. Bungursari',
+                jabatan: 'Bendahara Ranting',
+                unit: 'Ranting 2 - Kelurahan Bungursari',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/0047AB/ffffff?text=BEND+RTG+2'
+            },
+            {
+                id: 'pan-r03-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'Cecep Supriatna, S.Ag.',
+                nik: '3278081501810010',
+                kta: 'KTA-PAN-BGR-2025-0301',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1981-01-15',
+                jk: 'Laki-laki',
+                wa: '081321770301',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Wiraswasta',
+                alamat: 'Kp. Cibunigeulis RT 02/RW 01, Kel. Cibunigeulis',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 3 - Kelurahan Cibunigeulis',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+3'
+            },
+            {
+                id: 'pan-r04-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'Drs. H. Enjang Mulyana',
+                nik: '3278080308720012',
+                kta: 'KTA-PAN-BGR-2025-0401',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1972-08-03',
+                jk: 'Laki-laki',
+                wa: '081122990401',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Tokoh Masyarakat',
+                alamat: 'Jl. Sukajaya Raya No. 11, Kel. Sukajaya',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 4 - Kelurahan Sukajaya',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+4'
+            },
+            {
+                id: 'pan-r05-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'Rudi Hartono, S.T.',
+                nik: '3278082406860013',
+                kta: 'KTA-PAN-BGR-2025-0501',
+                tempatLahir: 'Ciamis',
+                tanggalLahir: '1986-06-24',
+                jk: 'Laki-laki',
+                wa: '085315000501',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Kontraktor',
+                alamat: 'Kp. Sukalaksana RT 01/RW 04, Kel. Sukalaksana',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 5 - Kelurahan Sukalaksana',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+5'
+            },
+            {
+                id: 'pan-r06-1',
+                kategori: 'Pengurus Ranting',
+                nama: 'Hendra Gunawan, S.E.',
+                nik: '3278081212880014',
+                kta: 'KTA-PAN-BGR-2025-0601',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1988-12-12',
+                jk: 'Laki-laki',
+                wa: '081214110601',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Wiraswasta',
+                alamat: 'Kp. Sukamulya RT 03/RW 02, Kel. Sukamulya',
+                jabatan: 'Ketua Ranting',
+                unit: 'Ranting 6 - Kelurahan Sukamulya',
+                koordinator: '',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=KETUA+RTG+6'
+            },
+
+            // ================= RELAWAN PAN BUNGURSARI (NON-SK) =================
+            {
+                id: 'rel-001',
+                kategori: 'Relawan',
+                nama: 'Galih Pratama Nugraha',
+                nik: '3278080504960101',
+                kta: 'REL-PAN-BGR-2025-001',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1996-04-05',
+                jk: 'Laki-laki',
+                wa: '082219001122',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Desainer Grafis & Konten Kreator',
+                alamat: 'Kp. Bantarsari RT 02/RW 03, Kel. Bantarsari',
+                jabatan: 'Tim Sosialisasi & Media',
+                unit: 'Ranting 1 - Kelurahan Bantarsari',
+                koordinator: 'Korlap Ust. Yayan Suryana',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/0047AB/ffffff?text=RELAWAN+01'
+            },
+            {
+                id: 'rel-002',
+                kategori: 'Relawan',
+                nama: 'Siti Nurhaliza, S.Pd.',
+                nik: '3278085808970102',
+                kta: 'REL-PAN-BGR-2025-002',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1997-08-18',
+                jk: 'Perempuan',
+                wa: '085722334455',
+                pendidikan: 'Sarjana (S1)',
+                pekerjaan: 'Guru Honorer',
+                alamat: 'Kp. Bungursari Wetan RT 01/RW 02, Kel. Bungursari',
+                jabatan: 'Tim Saksi TPS',
+                unit: 'Ranting 2 - Kelurahan Bungursari',
+                koordinator: 'TPS 03 Kel. Bungursari',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/1d4ed8/ffffff?text=SAKSI+TPS'
+            },
+            {
+                id: 'rel-003',
+                kategori: 'Relawan',
+                nama: 'Asep Rohmat',
+                nik: '3278081203900103',
+                kta: 'REL-PAN-BGR-2025-003',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1990-03-12',
+                jk: 'Laki-laki',
+                wa: '081394556677',
+                pendidikan: 'SMA / Sederajat',
+                pekerjaan: 'Pengemudi & Logistik',
+                alamat: 'Kp. Cibunigeulis RT 03/RW 04, Kel. Cibunigeulis',
+                jabatan: 'Tim Logistik & Pengamanan',
+                unit: 'Ranting 3 - Kelurahan Cibunigeulis',
+                koordinator: 'Posko Utama Bungursari',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/003399/ffffff?text=LOGISTIK'
+            },
+            {
+                id: 'rel-004',
+                kategori: 'Relawan',
+                nama: 'Rina Rahmawati',
+                nik: '3278086111950104',
+                kta: 'REL-PAN-BGR-2025-004',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1995-11-21',
+                jk: 'Perempuan',
+                wa: '089533441122',
+                pendidikan: 'SMA / Sederajat',
+                pekerjaan: 'Wiraswasta',
+                alamat: 'Kp. Sukamulya RT 02/RW 01, Kel. Sukamulya',
+                jabatan: 'Posko Pemenangan',
+                unit: 'Ranting 6 - Kelurahan Sukamulya',
+                koordinator: 'Hendra Gunawan, S.E.',
+                status: 'Aktif',
+                foto: 'https://placehold.co/300x360/2563eb/ffffff?text=POSKO'
+            },
+            {
+                id: 'rel-005',
+                kategori: 'Relawan',
+                nama: 'Dede Kurniawan',
+                nik: '3278080907940105',
+                kta: 'REL-PAN-BGR-2025-005',
+                tempatLahir: 'Tasikmalaya',
+                tanggalLahir: '1994-07-09',
+                jk: 'Laki-laki',
+                wa: '082127889900',
+                pendidikan: 'SMA / Sederajat',
+                pekerjaan: 'Pedagang',
+                alamat: 'Jl. Leuwidahu Sukarindik RT 01/RW 03, Kel. Sukarindik',
+                jabatan: 'Relawan Lapangan',
+                unit: 'Ranting 7 - Kelurahan Sukarindik',
+                koordinator: 'TPS 01 Kel. Sukarindik',
+                status: 'Menunggu Verifikasi',
+                foto: 'https://placehold.co/300x360/0047AB/ffffff?text=RELAWAN+05'
+            }
+        ];
+
+        let membersList = [];
+        let appSettings = { ...DEFAULT_SETTINGS };
+        let currentConfirmCallback = null;
+
+        // =========================================================================
+        // INISIALISASI APLIKASI & PENYIMPANAN LOCALSTORAGE
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFromStorage();
+            applySettingsToUI();
+            handleKategoriChange();
+            renderAll();
+            lucide.createIcons();
+        });
+
+        function loadFromStorage() {
+            try {
+                const savedData = localStorage.getItem(STORAGE_KEY_DATA);
+                const savedSettings = localStorage.getItem(STORAGE_KEY_SETTINGS);
+
+                if (savedData) {
+                    membersList = JSON.parse(savedData);
+                } else {
+                    membersList = [...DEFAULT_MEMBERS];
+                    saveDataToStorage();
+                }
+
+                if (savedSettings) {
+                    appSettings = { ...DEFAULT_SETTINGS, ...JSON.parse(savedSettings) };
+                } else {
+                    appSettings = { ...DEFAULT_SETTINGS };
+                    saveSettingsToStorage();
+                }
+            } catch (err) {
+                console.error('Gagal memuat localStorage:', err);
+                membersList = [...DEFAULT_MEMBERS];
+            }
+        }
+
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(membersList));
+            } catch (e) {
+                showToast('Peringatan: Kapasitas penyimpanan lokal penuh, gunakan URL foto lebih ringan.', 'error');
+            }
+        }
+
+        function saveSettingsToStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY_SETTINGS, JSON.stringify(appSettings));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // =========================================================================
+        // NAVIGASI TAB
+        // =========================================================================
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-pan-800', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+
+            const activePanel = document.getElementById(`tab-${tabName}`);
+            const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+            if (activePanel) activePanel.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'hover:bg-slate-100');
+                activeBtn.classList.add('bg-pan-800', 'text-white', 'shadow-sm');
+            }
+
+            if (tabName === 'struktur') {
+                renderStrukturOrganisasi();
+            } else if (tabName === 'relawan') {
+                renderRelawan();
+            }
+            lucide.createIcons();
+        }
+
+        function openFormNew(presetKategori = 'Pengurus Ranting', presetUnit = '', presetJabatan = '') {
+            resetFormPengurus();
+            const radio = document.querySelector(`input[name="kategori-keanggotaan"][value="${presetKategori}"]`);
+            if (radio) {
+                radio.checked = true;
+            }
+            handleKategoriChange();
+
+            if (presetUnit && presetKategori !== 'Pengurus Harian PAC') {
+                document.getElementById('input-unit').value = presetUnit;
+            }
+            if (presetJabatan) {
+                document.getElementById('input-jabatan').value = presetJabatan;
+            }
+            switchTab('pendaftaran');
+        }
+
+        // =========================================================================
+        // RENDER STATISTIK (4 METRIK UTAMA) & IDENTITAS ORGANISASI
+        // =========================================================================
+        function applySettingsToUI() {
+            document.getElementById('header-tingkat-badge').textContent = appSettings.tingkat;
+            document.getElementById('header-org-name').textContent = appSettings.orgName;
+            document.getElementById('header-org-region').querySelector('span').textContent = `${appSettings.region} • Periode ${appSettings.periode}`;
+            document.getElementById('struktur-heading').textContent = `STRUKTUR ${appSettings.tingkat} ${appSettings.orgName} - ${appSettings.region.toUpperCase()}`;
+
+            document.getElementById('set-org-name').value = appSettings.orgName;
+            document.getElementById('set-tingkat').value = appSettings.tingkat;
+            document.getElementById('set-region').value = appSettings.region;
+            document.getElementById('set-periode').value = appSettings.periode;
+            document.getElementById('set-sekretariat').value = appSettings.sekretariat;
+        }
+
+        function updateStats() {
+            const pengurusPAC = membersList.filter(m => m.kategori === 'Pengurus Harian PAC' && m.status !== 'Non-Aktif');
+            const pengurusRanting = membersList.filter(m => m.kategori === 'Pengurus Ranting' && m.status !== 'Non-Aktif');
+            const relawanAktif = membersList.filter(m => m.kategori === 'Relawan' && m.status === 'Aktif');
+            const totalRelawanSemua = membersList.filter(m => m.kategori === 'Relawan');
+
+            // Hitung slot KSB Ranting yang terisi dari total 30 slot (10 Ranting x 3 jabatan KSB)
+            let filledRantingSlots = 0;
+            DAFTAR_RANTING.forEach(rtg => {
+                const membersInRtg = pengurusRanting.filter(m => m.unit === rtg);
+                if (membersInRtg.some(m => m.jabatan === 'Ketua Ranting')) filledRantingSlots++;
+                if (membersInRtg.some(m => m.jabatan === 'Sekretaris Ranting')) filledRantingSlots++;
+                if (membersInRtg.some(m => m.jabatan === 'Bendahara Ranting')) filledRantingSlots++;
+            });
+
+            document.getElementById('stat-pac').textContent = pengurusPAC.length;
+            document.getElementById('stat-ranting-slot').textContent = `${filledRantingSlots} / 30`;
+            document.getElementById('stat-relawan').textContent = relawanAktif.length;
+            document.getElementById('stat-total-all').textContent = membersList.length;
+            document.getElementById('nav-badge-relawan').textContent = totalRelawanSemua.length;
+        }
+
+        function renderAll() {
+            updateStats();
+            renderDirektori();
+            renderRelawan();
+            renderStrukturOrganisasi();
+            lucide.createIcons();
+        }
+
+        // =========================================================================
+        // TAB 1: DIREKTORI PENGURUS STRUKTURAL (HANYA PAC & 10 RANTING)
+        // =========================================================================
+        function renderDirektori() {
+            const keyword = document.getElementById('filter-search').value.toLowerCase().trim();
+            const filterUnit = document.getElementById('filter-unit').value;
+            const filterStatus = document.getElementById('filter-status').value;
+
+            const strukturalList = membersList.filter(m => m.kategori !== 'Relawan');
+
+            const filtered = strukturalList.filter(item => {
+                const matchKeyword = !keyword ||
+                    item.nama.toLowerCase().includes(keyword) ||
+                    item.nik.includes(keyword) ||
+                    item.kta.toLowerCase().includes(keyword) ||
+                    item.jabatan.toLowerCase().includes(keyword) ||
+                    item.unit.toLowerCase().includes(keyword);
+
+                const matchUnit = !filterUnit || item.unit === filterUnit;
+                const matchStatus = !filterStatus || item.status === filterStatus;
+
+                return matchKeyword && matchUnit && matchStatus;
+            });
+
+            const tbody = document.getElementById('direktori-tbody');
+            const emptyState = document.getElementById('direktori-empty');
+            document.getElementById('direktori-count-badge').textContent = `Menampilkan ${filtered.length} dari ${strukturalList.length} pengurus`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = filtered.map(p => {
+                let statusBadge = '';
+                if (p.status === 'Aktif') {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>Aktif</span>`;
+                } else if (p.status === 'Menunggu Verifikasi') {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-pan-800"><span class="w-1.5 h-1.5 rounded-full bg-pan-700 animate-pulse"></span>Verifikasi</span>`;
+                } else {
+                    statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-700">Non-Aktif</span>`;
+                }
+
+                const isPAC = p.kategori === 'Pengurus Harian PAC';
+                const jabatanBadgeClass = isPAC
+                    ? 'bg-pan-800 text-white border border-pan-700'
+                    : 'bg-pan-50 text-pan-900 border border-pan-200';
+
+                const quickVerifyBtn = p.status === 'Menunggu Verifikasi'
+                    ? `<button onclick="quickVerify('${p.id}')" title="Setujui & Verifikasi Pengurus" class="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white transition-colors">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                       </button>`
+                    : '';
+
+                return `
+                    <tr class="hover:bg-pan-50/40 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${p.foto}" onerror="this.src='https://placehold.co/100x120/003399/ffffff?text=FOTO'" alt="${escapeHTML(p.nama)}" class="w-11 h-12 rounded-xl object-cover border border-slate-300 shrink-0 bg-slate-200">
+                                <div class="min-w-0">
+                                    <p class="font-bold text-slate-900 truncate max-w-[200px] sm:max-w-[260px]">${escapeHTML(p.nama)}</p>
+                                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-xs text-slate-500 mt-0.5 font-mono">
+                                        <span>${escapeHTML(p.kta)}</span>
+                                        <span>&bull;</span>
+                                        <span>NIK: ${escapeHTML(p.nik)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-bold ${jabatanBadgeClass}">
+                                ${escapeHTML(p.jabatan)}
+                            </span>
+                            <p class="text-xs font-semibold text-slate-700 mt-1">${escapeHTML(p.unit)}</p>
+                        </td>
+                        <td class="py-3.5 px-4 hidden md:table-cell">
+                            <p class="text-xs font-semibold text-slate-800 flex items-center gap-1">
+                                <i data-lucide="phone" class="w-3.5 h-3.5 text-pan-700"></i>
+                                ${escapeHTML(p.wa)}
+                            </p>
+                            <p class="text-xs text-slate-500 truncate max-w-[220px] mt-0.5" title="${escapeHTML(p.alamat)}">${escapeHTML(p.alamat)}</p>
+                        </td>
+                        <td class="py-3.5 px-4 whitespace-nowrap">
+                            ${statusBadge}
+                        </td>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center justify-end gap-1">
+                                ${quickVerifyBtn}
+                                <button onclick="openModalKTA('${p.id}')" title="Lihat & Cetak KTA PAN Digital" class="p-2 rounded-lg bg-sky-50 hover:bg-pan-800 text-pan-800 hover:text-white transition-colors">
+                                    <i data-lucide="id-card" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="editPengurus('${p.id}')" title="Edit Data Pengurus" class="p-2 rounded-lg bg-slate-100 hover:bg-pan-700 text-slate-700 hover:text-white transition-colors">
+                                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="confirmDeletePengurus('${p.id}')" title="Hapus Data" class="p-2 rounded-lg bg-red-50 hover:bg-red-600 text-red-700 hover:text-white transition-colors">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function resetFilter() {
+            document.getElementById('filter-search').value = '';
+            document.getElementById('filter-unit').value = '';
+            document.getElementById('filter-status').value = '';
+            renderDirektori();
+        }
+
+        // =========================================================================
+        // TAB KHUSUS: DATA RELAWAN
+        // =========================================================================
+        function renderRelawan() {
+            const keyword = document.getElementById('filter-relawan-search').value.toLowerCase().trim();
+            const filterRanting = document.getElementById('filter-relawan-ranting').value;
+            const filterPosko = document.getElementById('filter-relawan-posko').value;
+            const filterStatus = document.getElementById('filter-relawan-status').value;
+
+            const relawanAll = membersList.filter(m => m.kategori === 'Relawan');
+
+            const filtered = relawanAll.filter(r => {
+                const matchKeyword = !keyword ||
+                    r.nama.toLowerCase().includes(keyword) ||
+                    r.nik.includes(keyword) ||
+                    r.wa.includes(keyword) ||
+                    (r.koordinator && r.koordinator.toLowerCase().includes(keyword));
+                const matchRanting = !filterRanting || r.unit === filterRanting;
+                const matchPosko = !filterPosko || r.jabatan === filterPosko;
+                const matchStatus = !filterStatus || r.status === filterStatus;
+
+                return matchKeyword && matchRanting && matchPosko && matchStatus;
+            });
+
+            const tbody = document.getElementById('relawan-tbody');
+            const emptyState = document.getElementById('relawan-empty');
+            document.getElementById('relawan-count-badge').textContent = `Menampilkan ${filtered.length} dari ${relawanAll.length} relawan`;
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            tbody.innerHTML = filtered.map(r => {
+                const statusBadge = r.status === 'Aktif'
+                    ? `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>Aktif</span>`
+                    : `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-sky-100 text-pan-800"><span class="w-1.5 h-1.5 rounded-full bg-pan-700 animate-pulse"></span>Verifikasi</span>`;
+
+                const quickVerifyBtn = r.status === 'Menunggu Verifikasi'
+                    ? `<button onclick="quickVerify('${r.id}')" title="Verifikasi Relawan" class="p-2 rounded-lg bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white transition-colors">
+                        <i data-lucide="check-circle" class="w-4 h-4"></i>
+                       </button>`
+                    : '';
+
+                // Format link WhatsApp cepat (62...)
+                const waClean = r.wa.replace(/[^0-9]/g, '');
+                const waInternational = waClean.startsWith('0') ? '62' + waClean.slice(1) : waClean;
+
+                return `
+                    <tr class="hover:bg-pan-50/40 transition-colors">
+                        <td class="py-3.5 px-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${r.foto}" onerror="this.src='https://placehold.co/100x120/0047AB/ffffff?text=REL'" alt="${escapeHTML(r.nama)}" class="w-10 h-11 rounded-xl object-cover border border-slate-300 shrink-0 bg-slate-200">
+                                <div class="min-w-0">
+                                    <p class="font-bold text-slate-900 truncate max-w-[200px]">${escapeHTML(r.nama)}</p>
+                                    <p class="text-xs font-mono text-slate-500">NIK: ${escapeHTML(r.nik)}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3.5 px-4 whitespace-nowrap">
+                            <a href="https://wa.me/${waInternational}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-600 text-emerald-800 hover:text-white text-xs font-bold transition-colors" title="Chat WhatsApp Langsung">
+                                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                <span>${escapeHTML(r.wa)}</span>
+                            </a>
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <p class="text-xs font-bold text-slate-800">${escapeHTML(r.unit)}</p>
+                            ${r.koordinator ? `<p class="text-[11px] text-slate-500 mt-0.5">${escapeHTML(r.koordinator)}</p>` : ''}
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <span class="inline-block px-2.5 py-1 rounded-md text-xs font-bold bg-pan-50 text-pan-900 border border-pan-200">
+                                ${escapeHTML(r.jabatan)}
+                            </span>
+                        </td>
+                        <td class="py-3.5 px-4 whitespace-nowrap">
+                            ${statusBadge}
+                        </td>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center justify-end gap-1">
+                                ${quickVerifyBtn}
+                                <button onclick="openModalKTA('${r.id}')" title="Cetak Kartu Relawan PAN" class="p-2 rounded-lg bg-sky-50 hover:bg-pan-800 text-pan-800 hover:text-white transition-colors">
+                                    <i data-lucide="id-card" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="editPengurus('${r.id}')" title="Edit Data Relawan" class="p-2 rounded-lg bg-slate-100 hover:bg-pan-700 text-slate-700 hover:text-white transition-colors">
+                                    <i data-lucide="edit-3" class="w-4 h-4"></i>
+                                </button>
+                                <button onclick="confirmDeletePengurus('${r.id}')" title="Hapus Relawan" class="p-2 rounded-lg bg-red-50 hover:bg-red-600 text-red-700 hover:text-white transition-colors">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function resetFilterRelawan() {
+            document.getElementById('filter-relawan-search').value = '';
+            document.getElementById('filter-relawan-ranting').value = '';
+            document.getElementById('filter-relawan-posko').value = '';
+            document.getElementById('filter-relawan-status').value = '';
+            renderRelawan();
+        }
+
+        function quickVerify(id) {
+            const idx = membersList.findIndex(p => p.id === id);
+            if (idx !== -1) {
+                membersList[idx].status = 'Aktif';
+                saveDataToStorage();
+                renderAll();
+                showToast(`"${membersList[idx].nama}" berhasil diverifikasi aktif.`, 'success');
+            }
+        }
+
+        // =========================================================================
+        // TAB 2: FORM PENDAFTARAN & EDIT (DINAMIS SESUAI KATEGORI)
+        // =========================================================================
+        function getSelectedKategori() {
+            const checked = document.querySelector('input[name="kategori-keanggotaan"]:checked');
+            return checked ? checked.value : 'Pengurus Ranting';
+        }
+
+        function handleKategoriChange() {
+            const kategori = getSelectedKategori();
+            const unitWrapper = document.getElementById('field-unit-wrapper');
+            const labelJabatan = document.getElementById('label-jabatan');
+            const selectJabatan = document.getElementById('input-jabatan');
+            const koordinatorWrapper = document.getElementById('field-koordinator-wrapper');
+            const labelNomorKartu = document.getElementById('label-nomor-kartu');
+
+            if (kategori === 'Pengurus Harian PAC') {
+                unitWrapper.classList.add('hidden');
+                koordinatorWrapper.classList.add('hidden');
+                labelJabatan.innerHTML = 'Jabatan Pengurus PAC <span class="text-red-600">*</span>';
+                labelNomorKartu.textContent = 'Nomor KTA PAN (Kosongkan = Otomatis)';
+                selectJabatan.innerHTML = JABATAN_PAC_LIST.map(j => `<option value="${j}">${j}</option>`).join('');
+            } else if (kategori === 'Pengurus Ranting') {
+                unitWrapper.classList.remove('hidden');
+                koordinatorWrapper.classList.add('hidden');
+                document.getElementById('label-unit').innerHTML = 'Pilih Ranting (1–10) <span class="text-red-600">*</span>';
+                labelJabatan.innerHTML = 'Jabatan Struktural Ranting <span class="text-red-600">*</span>';
+                labelNomorKartu.textContent = 'Nomor KTA PAN (Kosongkan = Otomatis)';
+                selectJabatan.innerHTML = JABATAN_RANTING_LIST.map(j => `<option value="${j}">${j}</option>`).join('');
+            } else {
+                // Relawan
+                unitWrapper.classList.remove('hidden');
+                koordinatorWrapper.classList.remove('hidden');
+                document.getElementById('label-unit').innerHTML = 'Wilayah Tugas Ranting (1–10) <span class="text-red-600">*</span>';
+                labelJabatan.innerHTML = 'Bidang / Posko Relawan <span class="text-red-600">*</span>';
+                labelNomorKartu.textContent = 'Nomor Registrasi Relawan (Kosongkan = Otomatis)';
+                selectJabatan.innerHTML = POSKO_RELAWAN_LIST.map(p => `<option value="${p}">${p}</option>`).join('');
+            }
+        }
+
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            if (file.size > 1024 * 1024 * 1.5) {
+                showToast('Ukuran gambar terlalu besar (maksimal 1.5 MB).', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Img = e.target.result;
+                document.getElementById('preview-foto').src = base64Img;
+                document.getElementById('input-foto-url').value = base64Img;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleUrlPreview(url) {
+            const preview = document.getElementById('preview-foto');
+            if (url && url.trim() !== '') {
+                preview.src = url.trim();
+            } else {
+                preview.src = 'https://placehold.co/300x360/003399/ffffff?text=FOTO+3x4';
+            }
+        }
+
+        function generateNomorKartu(kategori) {
+            const year = new Date().getFullYear();
+            const prefix = kategori === 'Relawan' ? 'REL-PAN-BGR' : 'KTA-PAN-BGR';
+            const countSame = membersList.filter(m => (kategori === 'Relawan' ? m.kategori === 'Relawan' : m.kategori !== 'Relawan')).length + 1;
+            return `${prefix}-${year}-${String(countSame).padStart(4, '0')}`;
+        }
+
+        function handleSavePengurus(event) {
+            event.preventDefault();
+
+            const id = document.getElementById('input-id').value;
+            const nik = document.getElementById('input-nik').value.trim();
+            const kategori = getSelectedKategori();
+
+            if (!/^\d{16}$/.test(nik)) {
+                showToast('NIK harus terdiri dari tepat 16 digit angka!', 'error');
+                return;
+            }
+
+            const duplicateNik = membersList.find(p => p.nik === nik && p.id !== id);
+            if (duplicateNik) {
+                showToast(`NIK sudah terdaftar atas nama ${duplicateNik.nama}!`, 'error');
+                return;
+            }
+
+            const ktaInput = document.getElementById('input-kta').value.trim();
+            const fotoInput = document.getElementById('input-foto-url').value.trim();
+            const unitValue = kategori === 'Pengurus Harian PAC'
+                ? 'Pengurus Harian PAC'
+                : document.getElementById('input-unit').value;
+
+            const payload = {
+                id: id || (kategori === 'Relawan' ? 'rel-' : 'pan-') + Date.now(),
+                kategori: kategori,
+                nama: document.getElementById('input-nama').value.trim(),
+                nik: nik,
+                kta: ktaInput || generateNomorKartu(kategori),
+                tempatLahir: document.getElementById('input-tempat-lahir').value.trim(),
+                tanggalLahir: document.getElementById('input-tanggal-lahir').value,
+                jk: document.getElementById('input-jk').value,
+                wa: document.getElementById('input-wa').value.trim(),
+                pendidikan: document.getElementById('input-pendidikan').value,
+                pekerjaan: document.getElementById('input-pekerjaan').value.trim() || '-',
+                alamat: document.getElementById('input-alamat').value.trim(),
+                jabatan: document.getElementById('input-jabatan').value,
+                unit: unitValue,
+                koordinator: kategori === 'Relawan' ? document.getElementById('input-koordinator').value.trim() : '',
+                status: document.getElementById('input-status').value,
+                foto: fotoInput || `https://placehold.co/300x360/003399/ffffff?text=${kategori === 'Relawan' ? 'RELAWAN' : 'PENGURUS'}`
+            };
+
+            if (id) {
+                const idx = membersList.findIndex(p => p.id === id);
+                if (idx !== -1) {
+                    membersList[idx] = payload;
+                    showToast(`Data ${kategori} berhasil diperbarui!`, 'success');
+                }
+            } else {
+                membersList.unshift(payload);
+                showToast(`${kategori} baru berhasil disimpan!`, 'success');
+            }
+
+            saveDataToStorage();
+            resetFormPengurus();
+            renderAll();
+            switchTab(kategori === 'Relawan' ? 'relawan' : 'direktori');
+        }
+
+        function editPengurus(id) {
+            const item = membersList.find(p => p.id === id);
+            if (!item) return;
+
+            const radio = document.querySelector(`input[name="kategori-keanggotaan"][value="${item.kategori}"]`);
+            if (radio) radio.checked = true;
+            handleKategoriChange();
+
+            document.getElementById('input-id').value = item.id;
+            document.getElementById('input-nama').value = item.nama;
+            document.getElementById('input-nik').value = item.nik;
+            document.getElementById('input-kta').value = item.kta;
+            document.getElementById('input-tempat-lahir').value = item.tempatLahir;
+            document.getElementById('input-tanggal-lahir').value = item.tanggalLahir;
+            document.getElementById('input-jk').value = item.jk;
+            document.getElementById('input-wa').value = item.wa;
+            document.getElementById('input-pendidikan').value = item.pendidikan;
+            document.getElementById('input-pekerjaan').value = item.pekerjaan;
+            document.getElementById('input-alamat').value = item.alamat;
+            if (item.kategori !== 'Pengurus Harian PAC') {
+                document.getElementById('input-unit').value = item.unit;
+            }
+            document.getElementById('input-jabatan').value = item.jabatan;
+            document.getElementById('input-koordinator').value = item.koordinator || '';
+            document.getElementById('input-status').value = item.status;
+            document.getElementById('input-foto-url').value = item.foto;
+            document.getElementById('preview-foto').src = item.foto;
+
+            document.getElementById('form-title').innerHTML = `
+                <i data-lucide="edit-3" class="w-5 h-5 text-white"></i>
+                <span>Edit Data (${escapeHTML(item.kategori)}): ${escapeHTML(item.nama)}</span>
+            `;
+            document.getElementById('tab-label-form').textContent = 'Edit Data';
+            document.getElementById('btn-submit-text').textContent = 'Simpan Perubahan';
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+
+            switchTab('pendaftaran');
+        }
+
+        function resetFormPengurus() {
+            document.getElementById('form-pengurus').reset();
+            document.getElementById('input-id').value = '';
+            const defaultRadio = document.querySelector('input[name="kategori-keanggotaan"][value="Pengurus Ranting"]');
+            if (defaultRadio) defaultRadio.checked = true;
+            handleKategoriChange();
+
+            document.getElementById('preview-foto').src = 'https://placehold.co/300x360/003399/ffffff?text=FOTO+3x4';
+            document.getElementById('form-title').innerHTML = `
+                <i data-lucide="user-plus" class="w-5 h-5 text-white"></i>
+                <span>Formulir Pendaftaran Pengurus & Relawan PAC PAN Bungursari</span>
+            `;
+            document.getElementById('tab-label-form').textContent = 'Form Pendaftaran';
+            document.getElementById('btn-submit-text').textContent = 'Simpan Data';
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+            lucide.createIcons();
+        }
+
+        // =========================================================================
+        // TAB 3: STRUKTUR ORGANISASI (PAC & 10 RANTING + BADGE JUMLAH RELAWAN)
+        // =========================================================================
+        function renderStrukturOrganisasi() {
+            const ksbContainer = document.getElementById('struktur-ksb-container');
+            const rantingGrid = document.getElementById('struktur-ranting-grid');
+
+            const activeMembers = membersList.filter(p => p.status !== 'Non-Aktif');
+            const pacMembers = activeMembers.filter(p => p.kategori === 'Pengurus Harian PAC');
+
+            const ketuaPAC = pacMembers.filter(p => p.jabatan === 'Ketua PAC');
+            const wakilKetuaPAC = pacMembers.filter(p => p.jabatan === 'Wakil Ketua PAC');
+            const sekretarisPAC = pacMembers.filter(p => p.jabatan === 'Sekretaris PAC' || p.jabatan === 'Wakil Sekretaris PAC');
+            const bendaharaPAC = pacMembers.filter(p => p.jabatan === 'Bendahara PAC' || p.jabatan === 'Wakil Bendahara PAC');
+
+            const renderPersonCard = (person, highlight = false) => `
+                <div onclick="openModalKTA('${person.id}')" class="cursor-pointer group rounded-2xl p-4 border ${highlight ? 'bg-gradient-to-br from-pan-950 via-pan-900 to-pan-700 text-white border-sky-400 shadow-lg' : 'bg-white text-slate-800 border-slate-200 hover:border-pan-700 shadow-sm'} transition-all">
+                    <div class="flex items-center gap-3.5">
+                        <img src="${person.foto}" onerror="this.src='https://placehold.co/100x120/003399/ffffff?text=FOTO'" class="w-14 h-16 rounded-xl object-cover border-2 ${highlight ? 'border-white' : 'border-pan-200'} shrink-0">
+                        <div class="min-w-0 flex-1">
+                            <span class="inline-block px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider ${highlight ? 'bg-white text-pan-900' : 'bg-pan-100 text-pan-800'}">
+                                ${escapeHTML(person.jabatan)}
+                            </span>
+                            <h4 class="font-bold text-sm sm:text-base mt-1 truncate ${highlight ? 'text-white' : 'text-slate-900 group-hover:text-pan-800'}">${escapeHTML(person.nama)}</h4>
+                            <p class="text-xs font-mono mt-0.5 ${highlight ? 'text-sky-200' : 'text-slate-500'}">${escapeHTML(person.kta)}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            let ksbHTML = '';
+            if (ketuaPAC.length > 0) {
+                ksbHTML += `<div class="max-w-md mx-auto">${ketuaPAC.map(p => renderPersonCard(p, true)).join('')}</div>`;
+            }
+            if (wakilKetuaPAC.length > 0) {
+                ksbHTML += `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">${wakilKetuaPAC.map(p => renderPersonCard(p, false)).join('')}</div>`;
+            }
+            const sbPAC = [...sekretarisPAC, ...bendaharaPAC];
+            if (sbPAC.length > 0) {
+                ksbHTML += `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl mx-auto">${sbPAC.map(p => renderPersonCard(p, false)).join('')}</div>`;
+            }
+            if (!ksbHTML) {
+                ksbHTML = `<p class="text-center text-sm text-slate-500 py-4">Belum ada data Pengurus Harian PAC (Ketua, Sekretaris, Bendahara PAC).</p>`;
+            }
+            ksbContainer.innerHTML = ksbHTML;
+
+            // Render 10 Ranting + Badge Jumlah Relawan di tiap Ranting
+            rantingGrid.innerHTML = DAFTAR_RANTING.map(rantingName => {
+                const pengurusRtg = activeMembers.filter(p => p.kategori === 'Pengurus Ranting' && p.unit === rantingName);
+                const relawanRtg = activeMembers.filter(p => p.kategori === 'Relawan' && p.unit === rantingName);
+
+                const ketuaRtg = pengurusRtg.find(m => m.jabatan === 'Ketua Ranting');
+                const sekRtg = pengurusRtg.find(m => m.jabatan === 'Sekretaris Ranting');
+                const bendRtg = pengurusRtg.find(m => m.jabatan === 'Bendahara Ranting');
+
+                const filledCount = [ketuaRtg, sekRtg, bendRtg].filter(Boolean).length;
+                const badgeStatusClass = filledCount === 3
+                    ? 'bg-white text-pan-900'
+                    : 'bg-white/15 text-white border border-white/25';
+
+                const renderSlot = (roleLabel, personObj) => {
+                    if (personObj) {
+                        return `
+                            <div onclick="openModalKTA('${personObj.id}')" class="cursor-pointer bg-white p-2.5 rounded-xl border border-slate-200 hover:border-pan-700 flex items-center gap-3 transition-all group">
+                                <img src="${personObj.foto}" onerror="this.src='https://placehold.co/80x80/003399/ffffff?text=PAN'" class="w-10 h-10 rounded-lg object-cover border border-slate-200 shrink-0">
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center justify-between gap-1">
+                                        <span class="text-[10px] font-extrabold uppercase tracking-wider text-pan-800">${roleLabel}</span>
+                                        <span class="text-[10px] font-mono text-slate-400">${escapeHTML(personObj.wa)}</span>
+                                    </div>
+                                    <p class="text-xs font-bold text-slate-900 truncate group-hover:text-pan-700">${escapeHTML(personObj.nama)}</p>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        return `
+                            <div class="bg-slate-100/80 p-2.5 rounded-xl border border-dashed border-slate-300 flex items-center justify-between gap-2">
+                                <div class="min-w-0">
+                                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500">${roleLabel}</span>
+                                    <span class="text-xs text-slate-400 italic">Belum terisi</span>
+                                </div>
+                                <button onclick="openFormNew('Pengurus Ranting', '${escapeHTML(rantingName)}', '${roleLabel}')" class="shrink-0 inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-pan-800 hover:bg-pan-700 text-white text-[11px] font-bold transition-colors">
+                                    <i data-lucide="plus" class="w-3 h-3"></i>
+                                    <span>Isi</span>
+                                </button>
+                            </div>
+                        `;
+                    }
+                };
+
+                return `
+                    <div class="rounded-2xl border border-slate-200 bg-pan-50/40 overflow-hidden flex flex-col shadow-sm">
+                        <div class="px-4 py-3 bg-gradient-to-r from-pan-950 to-pan-800 text-white border-b-2 border-sky-400 flex items-center justify-between gap-2">
+                            <h3 class="font-bold text-xs sm:text-sm tracking-wide truncate">${escapeHTML(rantingName)}</h3>
+                            <div class="flex items-center gap-1.5 shrink-0">
+                                <button onclick="filterRelawanByRanting('${escapeHTML(rantingName)}')" class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-400/20 hover:bg-sky-400/35 text-sky-100 border border-sky-300/30 transition-colors" title="Lihat daftar relawan di ranting ini">
+                                    Relawan: ${relawanRtg.length}
+                                </button>
+                                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${badgeStatusClass}">
+                                    KSB: ${filledCount}/3
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-4 space-y-2.5 flex-1">
+                            ${renderSlot('Ketua Ranting', ketuaRtg)}
+                            ${renderSlot('Sekretaris Ranting', sekRtg)}
+                            ${renderSlot('Bendahara Ranting', bendRtg)}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function filterRelawanByRanting(rantingName) {
+            document.getElementById('filter-relawan-ranting').value = rantingName;
+            switchTab('relawan');
+        }
+
+        // =========================================================================
+        // MODAL KTA DIGITAL & KARTU RELAWAN DIGITAL
+        // =========================================================================
+        function openModalKTA(id) {
+            const p = membersList.find(item => item.id === id);
+            if (!p) return;
+
+            const isRelawan = p.kategori === 'Relawan';
+            document.getElementById('modal-kta-header-title').innerHTML = `
+                <i data-lucide="id-card" class="w-4 h-4 text-white"></i>
+                <span>${isRelawan ? 'Kartu Tanda Relawan PAN Digital' : 'Kartu Tanda Anggota & Pengurus PAN Digital'}</span>
+            `;
+            document.getElementById('btn-print-kta-label').textContent = isRelawan ? 'Cetak Kartu Relawan' : 'Cetak KTA';
+
+            document.getElementById('kta-tingkat').textContent = isRelawan ? 'TIM RELAWAN PEMENANGAN' : appSettings.tingkat;
+            document.getElementById('kta-org-name').textContent = appSettings.orgName;
+            document.getElementById('kta-region').textContent = appSettings.region;
+            document.getElementById('kta-periode').textContent = isRelawan
+                ? (p.koordinator ? `Korlap/Tugas: ${p.koordinator}` : `Periode: ${appSettings.periode}`)
+                : `Masa Bakti: ${appSettings.periode}`;
+
+            document.getElementById('kta-foto').src = p.foto;
+            document.getElementById('kta-jabatan').textContent = isRelawan ? `RELAWAN • ${p.jabatan}` : p.jabatan;
+            document.getElementById('kta-nama').textContent = p.nama;
+            document.getElementById('kta-unit').textContent = p.unit;
+            document.getElementById('kta-label-nomor').textContent = isRelawan ? 'No. Reg:' : 'No. KTA:';
+            document.getElementById('kta-nomor').textContent = p.kta;
+            document.getElementById('kta-nik').textContent = p.nik;
+            document.getElementById('kta-alamat').textContent = p.alamat;
+
+            const statusBadge = document.getElementById('kta-status-badge');
+            if (p.status === 'Aktif') {
+                statusBadge.textContent = 'AKTIF / TERVERIFIKASI';
+                statusBadge.className = 'font-bold text-white uppercase';
+            } else {
+                statusBadge.textContent = p.status.toUpperCase();
+                statusBadge.className = 'font-bold text-sky-200 uppercase';
+            }
+
+            const modal = document.getElementById('modal-kta');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons();
+        }
+
+        function closeModalKTA() {
+            const modal = document.getElementById('modal-kta');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function printSingleKTA() {
+            const ktaHTML = document.getElementById('kta-card-visual').outerHTML;
+            const printArea = document.getElementById('print-area');
+            printArea.innerHTML = `
+                <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; padding: 30px;">
+                    <h3 style="margin-bottom:16px; font-family:sans-serif; font-weight:bold; color:#003399;">KARTU IDENTITAS DIGITAL PARTAI AMANAT NASIONAL (PAN)</h3>
+                    ${ktaHTML}
+                </div>
+            `;
+            printArea.classList.remove('hidden');
+            window.print();
+            printArea.classList.add('hidden');
+        }
+
+        // =========================================================================
+        // EKSPOR CSV & CETAK LAPORAN (TERPISAH ANTARA SK STRUKTURAL & RELAWAN)
+        // =========================================================================
+        function handleSaveSettings(event) {
+            event.preventDefault();
+            appSettings.orgName = document.getElementById('set-org-name').value.trim();
+            appSettings.tingkat = document.getElementById('set-tingkat').value;
+            appSettings.region = document.getElementById('set-region').value.trim();
+            appSettings.periode = document.getElementById('set-periode').value.trim();
+            appSettings.sekretariat = document.getElementById('set-sekretariat').value.trim();
+
+            saveSettingsToStorage();
+            applySettingsToUI();
+            showToast('Identitas organisasi berhasil diperbarui!', 'success');
+        }
+
+        function exportToCSV() {
+            const strukturalList = membersList.filter(m => m.kategori !== 'Relawan');
+            if (strukturalList.length === 0) {
+                showToast('Tidak ada data pengurus struktural untuk diekspor.', 'error');
+                return;
+            }
+
+            const headers = [
+                'No', 'Nomor KTA PAN', 'NIK', 'Nama Lengkap', 'Kategori', 'Unit Kepengurusan (PAC / Ranting)', 'Jabatan',
+                'Status', 'Tempat Lahir', 'Tanggal Lahir', 'Jenis Kelamin',
+                'No WhatsApp', 'Pendidikan', 'Pekerjaan', 'Alamat Domisili'
+            ];
+
+            const rows = strukturalList.map((p, index) => [
+                index + 1,
+                `"${p.kta}"`,
+                `"${p.nik}"`,
+                `"${p.nama.replace(/"/g, '""')}"`,
+                `"${p.kategori}"`,
+                `"${p.unit}"`,
+                `"${p.jabatan}"`,
+                `"${p.status}"`,
+                `"${p.tempatLahir}"`,
+                `"${p.tanggalLahir}"`,
+                `"${p.jk}"`,
+                `"${p.wa}"`,
+                `"${p.pendidikan}"`,
+                `"${p.pekerjaan.replace(/"/g, '""')}"`,
+                `"${p.alamat.replace(/"/g, '""')}"`
+            ]);
+
+            downloadCSVFile(headers, rows, 'Data_Pengurus_Struktural_PAC_PAN_Bungursari.csv');
+            showToast('File CSV Pengurus Struktural berhasil diunduh!', 'success');
+        }
+
+        function exportRelawanCSV() {
+            const relawanList = membersList.filter(m => m.kategori === 'Relawan');
+            if (relawanList.length === 0) {
+                showToast('Tidak ada data relawan untuk diekspor.', 'error');
+                return;
+            }
+
+            const headers = [
+                'No', 'No Registrasi', 'NIK', 'Nama Relawan', 'Wilayah Ranting / Kelurahan', 'Tim / Posko Relawan',
+                'Koordinator / TPS', 'Status', 'No WhatsApp', 'Jenis Kelamin', 'Alamat Domisili'
+            ];
+
+            const rows = relawanList.map((r, index) => [
+                index + 1,
+                `"${r.kta}"`,
+                `"${r.nik}"`,
+                `"${r.nama.replace(/"/g, '""')}"`,
+                `"${r.unit}"`,
+                `"${r.jabatan}"`,
+                `"${(r.koordinator || '-').replace(/"/g, '""')}"`,
+                `"${r.status}"`,
+                `"${r.wa}"`,
+                `"${r.jk}"`,
+                `"${r.alamat.replace(/"/g, '""')}"`
+            ]);
+
+            downloadCSVFile(headers, rows, 'Data_Relawan_PAC_PAN_Bungursari.csv');
+            showToast('File CSV Data Relawan berhasil diunduh!', 'success');
+        }
+
+        function downloadCSVFile(headers, rows, fileName) {
+            const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function getKopSuratHTML() {
+            return `
+                <div style="display:flex; align-items:center; justify-content:center; gap:16px; border-bottom: 3px double #003399; padding-bottom: 12px; margin-bottom: 20px;">
+                    <svg width="64" height="64" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="6" width="88" height="88" rx="10" stroke="#FFFFFF" stroke-width="4.5" fill="#003399"/>
+                        <circle cx="50" cy="40" r="13" fill="#FFFFFF"/>
+                        <polygon points="50,12 46.5,23 53.5,23" fill="#FFFFFF"/>
+                        <polygon points="70,19 60.5,25.5 65.5,30.5" fill="#FFFFFF"/>
+                        <polygon points="30,19 39.5,25.5 34.5,30.5" fill="#FFFFFF"/>
+                        <polygon points="79,38 67,35.5 67,42.5" fill="#FFFFFF"/>
+                        <polygon points="21,38 33,35.5 33,42.5" fill="#FFFFFF"/>
+                        <rect x="14" y="60" width="72" height="5.5" fill="#FFFFFF"/>
+                        <rect x="14" y="69" width="72" height="5.5" fill="#FFFFFF"/>
+                        <rect x="14" y="78" width="72" height="5.5" fill="#FFFFFF"/>
+                    </svg>
+                    <div style="text-align:center;">
+                        <h3 style="margin:0; font-size:12pt; text-transform:uppercase; color:#003399;">${escapeHTML(appSettings.tingkat)}</h3>
+                        <h2 style="margin:3px 0; font-size:15pt; text-transform:uppercase; color:#003399;">${escapeHTML(appSettings.orgName)}</h2>
+                        <p style="margin:2px 0; font-size:10.5pt; font-weight:bold;">${escapeHTML(appSettings.region)}</p>
+                        <p style="margin:0; font-size:8.5pt;">Sekretariat: ${escapeHTML(appSettings.sekretariat)}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function printLaporanSK() {
+            const printArea = document.getElementById('print-area');
+
+            // HANYA Pengurus Struktural (TIDAK mencampurkan Relawan)
+            const pacRows = membersList.filter(p => p.kategori === 'Pengurus Harian PAC');
+            const rantingRows = [];
+            DAFTAR_RANTING.forEach(rtg => {
+                const members = membersList.filter(p => p.kategori === 'Pengurus Ranting' && p.unit === rtg);
+                const roleOrder = { 'Ketua Ranting': 1, 'Sekretaris Ranting': 2, 'Bendahara Ranting': 3 };
+                members.sort((a, b) => (roleOrder[a.jabatan] || 9) - (roleOrder[b.jabatan] || 9));
+                rantingRows.push(...members);
+            });
+
+            const orderedList = [...pacRows, ...rantingRows];
+            const ketuaPACObj = pacRows.find(p => p.jabatan === 'Ketua PAC');
+            const sekPACObj = pacRows.find(p => p.jabatan === 'Sekretaris PAC');
+
+            const rowsHTML = orderedList.map((p, idx) => `
+                <tr>
+                    <td style="border:1px solid #333; padding:6px; text-align:center;">${idx + 1}</td>
+                    <td style="border:1px solid #333; padding:6px;"><strong>${escapeHTML(p.nama)}</strong><br><small>NIK: ${escapeHTML(p.nik)} | KTA: ${escapeHTML(p.kta)}</small></td>
+                    <td style="border:1px solid #333; padding:6px;">${escapeHTML(p.unit)}</td>
+                    <td style="border:1px solid #333; padding:6px; font-weight:bold;">${escapeHTML(p.jabatan)}</td>
+                    <td style="border:1px solid #333; padding:6px;">${escapeHTML(p.alamat)}</td>
+                    <td style="border:1px solid #333; padding:6px; text-align:center;">${escapeHTML(p.status)}</td>
+                </tr>
+            `).join('');
+
+            printArea.innerHTML = `
+                <div style="font-family: 'Times New Roman', serif; color: #000;">
+                    ${getKopSuratHTML()}
+                    <div style="text-align:center; margin-bottom:16px;">
+                        <h4 style="margin:0; text-decoration:underline; font-size:12pt;">LAMPIRAN SUSUNAN PERSONALIA PENGURUS PAC & 10 RANTING</h4>
+                        <p style="margin:4px 0 0 0; font-size:10pt;">MASA BAKTI PERIODE ${escapeHTML(appSettings.periode)}</p>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:9.5pt;">
+                        <thead>
+                            <tr style="background:#eff6ff;">
+                                <th style="border:1px solid #333; padding:6px; width:35px;">No</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Nama Lengkap & Identitas</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Unit Kepengurusan (PAC / Ranting)</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Jabatan</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Alamat Domisili</th>
+                                <th style="border:1px solid #333; padding:6px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
+                    </table>
+                    <div style="margin-top:30px; display:flex; justify-content:space-between; padding: 0 20px; font-size:10pt;">
+                        <div style="text-align:center; width:240px;">
+                            <p style="margin-bottom:4px;">&nbsp;</p>
+                            <p style="margin-bottom:60px;">Ketua PAC PAN Bungursari,</p>
+                            <p style="font-weight:bold; text-decoration:underline;">${ketuaPACObj ? escapeHTML(ketuaPACObj.nama) : '........................................'}</p>
+                        </div>
+                        <div style="text-align:center; width:240px;">
+                            <p style="margin-bottom:4px;">Ditetapkan di: Kota Tasikmalaya</p>
+                            <p style="margin-bottom:60px;">Sekretaris PAC PAN Bungursari,</p>
+                            <p style="font-weight:bold; text-decoration:underline;">${sekPACObj ? escapeHTML(sekPACObj.nama) : '........................................'}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            printArea.classList.remove('hidden');
+            window.print();
+            printArea.classList.add('hidden');
+        }
+
+        function printDaftarRelawan() {
+            const printArea = document.getElementById('print-area');
+            const relawanList = membersList.filter(m => m.kategori === 'Relawan');
+
+            const rowsHTML = relawanList.map((r, idx) => `
+                <tr>
+                    <td style="border:1px solid #333; padding:6px; text-align:center;">${idx + 1}</td>
+                    <td style="border:1px solid #333; padding:6px;"><strong>${escapeHTML(r.nama)}</strong><br><small>NIK: ${escapeHTML(r.nik)}</small></td>
+                    <td style="border:1px solid #333; padding:6px;">${escapeHTML(r.wa)}</td>
+                    <td style="border:1px solid #333; padding:6px;">${escapeHTML(r.unit)}</td>
+                    <td style="border:1px solid #333; padding:6px;">${escapeHTML(r.jabatan)} ${r.koordinator ? `<br><small>(${escapeHTML(r.koordinator)})</small>` : ''}</td>
+                    <td style="border:1px solid #333; padding:6px; text-align:center;">${escapeHTML(r.status)}</td>
+                </tr>
+            `).join('');
+
+            printArea.innerHTML = `
+                <div style="font-family: 'Times New Roman', serif; color: #000;">
+                    ${getKopSuratHTML()}
+                    <div style="text-align:center; margin-bottom:16px;">
+                        <h4 style="margin:0; text-decoration:underline; font-size:12pt;">DAFTAR RELAWAN & TIM PEMENANGAN PAC PAN BUNGURSARI</h4>
+                        <p style="margin:4px 0 0 0; font-size:10pt;">WILAYAH RANTING 1 S/D RANTING 10 KECAMATAN BUNGURSARI</p>
+                    </div>
+                    <table style="width:100%; border-collapse:collapse; font-size:9.5pt;">
+                        <thead>
+                            <tr style="background:#eff6ff;">
+                                <th style="border:1px solid #333; padding:6px; width:35px;">No</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Nama Relawan & NIK</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">No. WhatsApp</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Wilayah Ranting</th>
+                                <th style="border:1px solid #333; padding:6px; text-align:left;">Tim / Posko</th>
+                                <th style="border:1px solid #333; padding:6px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>${rowsHTML}</tbody>
+                    </table>
+                </div>
+            `;
+
+            printArea.classList.remove('hidden');
+            window.print();
+            printArea.classList.add('hidden');
+        }
+
+        // =========================================================================
+        // MODAL KONFIRMASI & UTILITAS UI
+        // =========================================================================
+        function confirmDeletePengurus(id) {
+            const p = membersList.find(item => item.id === id);
+            if (!p) return;
+
+            openConfirmModal(
+                `Hapus Data ${p.kategori}?`,
+                `Anda akan menghapus "${p.nama}" (${p.jabatan}) dari database. Tindakan ini tidak dapat dibatalkan.`,
+                () => {
+                    membersList = membersList.filter(item => item.id !== id);
+                    saveDataToStorage();
+                    renderAll();
+                    showToast('Data berhasil dihapus.', 'success');
+                }
+            );
+        }
+
+        function confirmResetDemo() {
+            openConfirmModal(
+                'Reset Data Demo Awal?',
+                'Seluruh perubahan data saat ini akan dikembalikan ke data contoh Pengurus PAC, 10 Ranting, dan Relawan Bungursari. Lanjutkan?',
+                () => {
+                    membersList = [...DEFAULT_MEMBERS];
+                    appSettings = { ...DEFAULT_SETTINGS };
+                    saveDataToStorage();
+                    saveSettingsToStorage();
+                    applySettingsToUI();
+                    renderAll();
+                    showToast('Data demo PAC PAN Bungursari berhasil dipulihkan.', 'success');
+                }
+            );
+        }
+
+        function openConfirmModal(title, message, onConfirm) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-message').textContent = message;
+            currentConfirmCallback = onConfirm;
+
+            const modal = document.getElementById('modal-confirm');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            document.getElementById('confirm-yes-btn').onclick = () => {
+                if (currentConfirmCallback) currentConfirmCallback();
+                closeConfirmModal();
+            };
+            lucide.createIcons();
+        }
+
+        function closeConfirmModal() {
+            const modal = document.getElementById('modal-confirm');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            currentConfirmCallback = null;
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const isError = type === 'error';
+
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold transition-all transform translate-y-2 opacity-0 ${
+                isError
+                    ? 'bg-red-900 text-white border-red-700'
+                    : 'bg-pan-950 text-white border-white/30'
+            }`;
+
+            toast.innerHTML = `
+                <i data-lucide="${isError ? 'alert-circle' : 'check-circle-2'}" class="w-5 h-5 ${isError ? 'text-red-300' : 'text-white'} shrink-0"></i>
+                <span class="flex-1">${escapeHTML(message)}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+    </script>
+</body>
+</html>
